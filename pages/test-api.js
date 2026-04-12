@@ -56,7 +56,7 @@ export default function TestAPI() {
     <div className="p-8 max-w-4xl mx-auto">
       <h1 className="text-3xl font-bold mb-4">API Endpoint Tester</h1>
       <p className="text-gray-600 mb-6">
-        This page helps debug your API endpoints. Click "Run Tests" to check if your APIs are responding correctly.
+        This page helps debug your API endpoints. Click &quot;Run Tests&quot; to check if your APIs are responding correctly.
       </p>
 
       <button
@@ -101,7 +101,7 @@ export default function TestAPI() {
         <h3 className="font-bold mb-2">Notes:</h3>
         <ul className="text-sm text-gray-700 space-y-1">
           <li>• Check that the obituaries endpoint returns HTTP 200 with a list of obituaries</li>
-          <li>• The sample obituary test will fail (404) because "test-id-12345" doesn't exist</li>
+          <li>• The sample obituary test will fail (404) because &quot;test-id-12345&quot; doesn&apos;t exist</li>
           <li>• Get a real obituary ID from your dashboard and test with that</li>
           <li>• All endpoints should be accessible - if you see CORS errors, check your browser console</li>
         </ul>

@@ -102,7 +102,7 @@ export default function MemoryForm({ obituaryId, onMemoryAdded, onCancel }) {
         <div>
           <label className="block text-sm text-gray-400 mb-1.5">Photos (Optional)</label>
           <p className="text-gray-500 text-xs mb-3">
-            Add up to 5 photos to accompany this memory. They'll appear in a rotating carousel.
+            Add up to 5 photos to accompany this memory. They&apos;ll appear in a rotating carousel.
           </p>
           <ImageUploader
             images={form.photos}

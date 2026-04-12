@@ -32,7 +32,7 @@ export default async function handler(req, res) {
         birthDate: o.birthDate || '',
         deathDate: o.deathDate || '',
         images: o.images || [],
-        url: o.url || '#',
+        url: normalizeUrl(o.url),
       }));
 
     const cards = obituaries.length === 0
@@ -42,7 +42,7 @@ export default async function handler(req, res) {
             ? `<img class="rb-hw-img" src="${esc(o.images[0])}" alt="${esc(o.fullName)}">`
             : '<div class="rb-hw-placeholder">&#10013;</div>';
           const dates = [o.birthDate, o.deathDate].filter(Boolean).join(' – ');
-          return `<a href="${esc(o.url)}" class="rb-hw-card" style="text-decoration:none;color:inherit">${img}<div class="rb-hw-content"><div><div class="rb-hw-name">${esc(o.fullName)}</div><div class="rb-hw-dates">${esc(dates)}</div></div><button class="rb-hw-btn" onclick="window.location.href='${esc(o.url)}';return false;">Read Obituary</button></div></a>`;
+          return `<a href="${esc(o.url)}" class="rb-hw-card" style="text-decoration:none;color:inherit">${img}<div class="rb-hw-content"><div><div class="rb-hw-name">${esc(o.fullName)}</div><div class="rb-hw-dates">${esc(dates)}</div></div><button class="rb-hw-btn">Read Obituary</button></div></a>`;
         }).join('');
 
     const html = `<!DOCTYPE html>
@@ -61,10 +61,10 @@ body{font-family:Georgia,serif;background:transparent}
 .rb-hw-img{width:100%;height:240px;object-fit:cover;display:block;background:#111}
 .rb-hw-placeholder{width:100%;height:240px;background:#1a1a1a;display:flex;align-items:center;justify-content:center;font-size:4rem;color:#d97706}
 .rb-hw-content{padding:16px;flex:1;display:flex;flex-direction:column;justify-content:space-between}
-.rb-hw-name{color:#f59e0b;font-size:1.1rem;font-weight:600;margin-bottom:8px;line-height:1.3}
+.rb-hw-name{color:#d4af37;font-size:1.25rem;font-weight:600;margin-bottom:8px;line-height:1.3}
 .rb-hw-dates{color:#d1d5db;font-size:.85rem;margin-bottom:12px}
-.rb-hw-btn{background:#d97706;color:#fff;border:none;border-radius:6px;padding:8px 16px;font-size:.85rem;font-weight:600;cursor:pointer;margin-top:auto;transition:background .2s;font-family:inherit}
-.rb-hw-btn:hover{background:#b45309}
+.rb-hw-btn{background:transparent;color:#d4af37;border:1px solid #d4af37;border-radius:6px;padding:8px 16px;font-size:.85rem;font-weight:600;cursor:pointer;margin-top:auto;transition:all .2s;font-family:inherit;width:100%}
+.rb-hw-btn:hover{background:#d4af37;color:#000}
 .rb-hw-empty{color:#6b7280;font-size:.9rem;text-align:center;padding:32px}
 </style>
 </head>
@@ -88,4 +88,10 @@ body{font-family:Georgia,serif;background:transparent}
 
 function esc(s) {
   return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function normalizeUrl(url) {
+  if (!url || url === '#') return '#';
+  if (url.startsWith('http://') || url.startsWith('https://')) return url;
+  return 'https://' + url;
 }

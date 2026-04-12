@@ -81,7 +81,12 @@ export default function EmbedHome({ obituaries, error }) {
               <div className="rb-hw-empty">No recent obituaries.</div>
             ) : (
               obituaries.map((o) => (
-                <a key={o.id} href={o.url} className="rb-hw-card" style={{ textDecoration: 'none' }}>
+                <div
+                  key={o.id}
+                  className="rb-hw-card"
+                  onClick={() => { window.top.location.href = o.url; }}
+                  style={{ cursor: 'pointer' }}
+                >
                   {o.images && o.images[0] ? (
                     <img className="rb-hw-img" src={o.images[0]} alt={o.fullName} />
                   ) : (
@@ -96,7 +101,7 @@ export default function EmbedHome({ obituaries, error }) {
                     </div>
                     <button className="rb-hw-btn">Read Obituary</button>
                   </div>
-                </a>
+                </div>
               ))
             )}
           </div>

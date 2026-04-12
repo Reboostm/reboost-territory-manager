@@ -42,7 +42,7 @@ export default async function handler(req, res) {
             ? `<img class="rb-hw-img" src="${esc(o.images[0])}" alt="${esc(o.fullName)}">`
             : '<div class="rb-hw-placeholder">&#10013;</div>';
           const dates = [o.birthDate, o.deathDate].filter(Boolean).join(' – ');
-          return `<a href="${esc(o.url)}" class="rb-hw-card" style="text-decoration:none;color:inherit">${img}<div class="rb-hw-content"><div><div class="rb-hw-name">${esc(o.fullName)}</div><div class="rb-hw-dates">${esc(dates)}</div></div><button class="rb-hw-btn">Read Obituary</button></div></a>`;
+          return `<div class="rb-hw-card" onclick="window.top.location.href='${esc(o.url)}';" style="cursor:pointer">${img}<div class="rb-hw-content"><div><div class="rb-hw-name">${esc(o.fullName)}</div><div class="rb-hw-dates">${esc(dates)}</div></div><button class="rb-hw-btn">Read Obituary</button></div></div>`;
         }).join('');
 
     const html = `<!DOCTYPE html>

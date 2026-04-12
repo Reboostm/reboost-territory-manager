@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head><title>Embed Code Test</title></head>
+<body style="background:#111;color:#fff;font-family:sans-serif;padding:20px">
+<h2>Testing Embed Codes</h2>
+<div id="log" style="background:#222;padding:10px;margin:10px 0;font-family:monospace;font-size:12px;white-space:pre-wrap"></div>
+
+<h3>Test 1: Home Page (obituaries list)</h3>
+<div id="test1" style="border:1px solid #333;padding:10px;margin:10px 0">Loading...</div>
+
+<h3>Test 2: Single Obituary (ZfFiEJBqgc7tZX1B9T2C)</h3>
+<div id="test2" style="border:1px solid #333;padding:10px;margin:10px 0">Loading...</div>
+
+<h3>Test 3: Memories</h3>
+<div id="test3" style="border:1px solid #333;padding:10px;margin:10px 0">Loading...</div>
+
+<script>
+var log = document.getElementById('log');
+function addLog(msg) {
+  log.textContent += new Date().toLocaleTimeString() + ' - ' + msg + '\n';
+  console.log(msg);
+}
+
+var apiBase = 'https://obituary-management-system.vercel.app';
+
+// Test 1: Obituaries list
+addLog('Starting Test 1: GET /api/obituaries?limit=6');
+fetch(apiBase + '/api/obituaries?limit=6')
+  .then(function(res) {
+    addLog('Test 1 Response: HTTP ' + res.status + ' ' + res.statusText);
+    addLog('Test 1 Headers: ' + JSON.stringify(Object.fromEntries(res.headers.entries())));
+    return res.text();
+  })
+  .then(function(text) {
+    addLog('Test 1 Body (first 300 chars): ' + text.substring(0, 300));
+    try {
+      var data = JSON.parse(text);
+      if (Array.isArray(data)) {
+        document.getElementById('test1').textContent = 'SUCCESS: Got ' + data.length + ' obituaries';
+        addLog('Test 1 SUCCESS: ' + data.length + ' obituaries');
+      } else {
+        document.getElementById('test1').textContent = 'ERROR: Response is not array: ' + JSON.stringify(data);
+        addLog('Test 1 ERROR: Not array - ' + JSON.stringify(data));
+      }
+    } catch(e) {
+      document.getElementById('test1').textContent = 'PARSE ERROR: ' + e.message;
+      addLog('Test 1 PARSE ERROR: ' + e.message);
+    }
+  })
+  .catch(function(e) {
+    document.getElementById('test1').textContent = 'FETCH ERROR: ' + e.message;
+    addLog('Test 1 FETCH ERROR: ' + e.message + ' (type: ' + e.name + ')');
+  });
+
+// Test 2: Single obituary
+var testId = 'ZfFiEJBqgc7tZX1B9T2C';
+addLog('Starting Test 2: GET /api/obituary/' + testId);
+fetch(apiBase + '/api/obituary/' + testId)
+  .then(function(res) {
+    addLog('Test 2 Response: HTTP ' + res.status + ' ' + res.statusText);
+    return res.text();
+  })
+  .then(function(text) {
+    addLog('Test 2 Body (first 300 chars): ' + text.substring(0, 300));
+    try {
+      var data = JSON.parse(text);
+      if (data.id) {
+        document.getElementById('test2').textContent = 'SUCCESS: Got obituary "' + data.fullName + '"';
+        addLog('Test 2 SUCCESS: ' + data.fullName);
+      } else if (data.error) {
+        document.getElementById('test2').textContent = 'API ERROR: ' + data.error;
+        addLog('Test 2 API ERROR: ' + data.error);
+      }
+    } catch(e) {
+      document.getElementById('test2').textContent = 'PARSE ERROR: ' + e.message;
+      addLog('Test 2 PARSE ERROR: ' + e.message);
+    }
+  })
+  .catch(function(e) {
+    document.getElementById('test2').textContent = 'FETCH ERROR: ' + e.message;
+    addLog('Test 2 FETCH ERROR: ' + e.message);
+  });
+
+// Test 3: Memories
+addLog('Starting Test 3: GET /api/memories/' + testId);
+fetch(apiBase + '/api/memories/' + testId)
+  .then(function(res) {
+    addLog('Test 3 Response: HTTP ' + res.status + ' ' + res.statusText);
+    return res.text();
+  })
+  .then(function(text) {
+    addLog('Test 3 Body (first 300 chars): ' + text.substring(0, 300));
+    try {
+      var data = JSON.parse(text);
+      document.getElementById('test3').textContent = 'SUCCESS: Got ' + (Array.isArray(data) ? data.length : '?') + ' memories';
+      addLog('Test 3 SUCCESS');
+    } catch(e) {
+      document.getElementById('test3').textContent = 'PARSE ERROR: ' + e.message;
+      addLog('Test 3 PARSE ERROR: ' + e.message);
+    }
+  })
+  .catch(function(e) {
+    document.getElementById('test3').textContent = 'FETCH ERROR: ' + e.message;
+    addLog('Test 3 FETCH ERROR: ' + e.message);
+  });
+</script>
+</body>
+</html>

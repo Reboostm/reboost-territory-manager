@@ -48,7 +48,7 @@ export default function ObituaryForm({ initial, onSave, onCancel }) {
           services: initial.services?.length ? initial.services : [{ ...EMPTY_SERVICE }],
           images: initial.images || [],
           status: initial.status || 'draft',
-          url: initial.url || `${BASE_URL}/${slugifyName(initial.fullName)}`,
+          url: initial.url || `${BASE_URL}${slugifyName(initial.fullName)}`,
         }
       : { ...EMPTY_FORM }
   );
@@ -60,7 +60,7 @@ export default function ObituaryForm({ initial, onSave, onCancel }) {
   // Auto-generate URL from fullName (only if creating new, not editing)
   useEffect(() => {
     if (!initial && form.fullName.trim()) {
-      const newUrl = `${BASE_URL}/${slugifyName(form.fullName)}`;
+      const newUrl = `${BASE_URL}${slugifyName(form.fullName)}`;
       setForm((prev) => ({ ...prev, url: newUrl }));
     }
   }, [form.fullName, initial]);

@@ -41,18 +41,20 @@ export default async function handler(req, res) {
           const img = (o.images && o.images[0])
             ? '<img class="card-img" src="' + esc(o.images[0]) + '" alt="' + esc(o.fullName) + '">'
             : '<div class="card-placeholder">&#10013;</div>';
-          const cardClass = i % 2 === 1 ? 'card card-even' : 'card';
           const locationHtml = o.location ? '<div class="card-location">' + esc(o.location) + '</div>' : '';
-          return '<a href="' + href + '" target="_top" class="' + cardClass + '">'
-            + '<div class="card-content">'
+          const contentHtml = '<div class="card-content">'
             + '<div class="card-name">' + esc(o.fullName) + '</div>'
             + '<div class="card-dates">' + esc(dates) + '</div>'
             + locationHtml
             + '<div class="card-bio">' + excerpt + '</div>'
             + '<span class="card-btn">Visit Obituary</span>'
-            + '</div>'
-            + '<div class="img-wrap">' + img + '</div>'
-            + '</a>';
+            + '</div>';
+          const imgHtml = '<div class="img-wrap">' + img + '</div>';
+          // Alternate: even index = image left, odd index = image right
+          const inner = i % 2 === 0
+            ? imgHtml + contentHtml
+            : contentHtml + imgHtml;
+          return '<a href="' + href + '" target="_top" class="card">' + inner + '</a>';
         }).join('');
 
     const css = [
@@ -61,14 +63,12 @@ export default async function handler(req, res) {
       '.title{color:#d4af7f;font-size:1.5rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px;font-weight:600;text-align:center}',
       '.subtitle{color:#d1d5db;font-size:1rem;text-align:center;margin-bottom:28px;line-height:1.6}',
       '.search-wrap{display:flex;justify-content:center;margin-bottom:32px}',
-      '.search{width:100%;max-width:500px;padding:12px 18px;background:#fff;border:2px solid #d4af7f;color:#000;border-radius:8px;font-size:1rem;font-family:Georgia,serif;box-shadow:0 2px 8px rgba(0,0,0,0.3);outline:none}',
+      '.search{width:100%;max-width:500px;padding:12px 18px;background:#1a1a1a;border:2px solid #d4af7f;color:#fff;border-radius:8px;font-size:1rem;font-family:Georgia,serif;outline:none}',
       '.search::placeholder{color:#888}',
       '.grid{display:grid;grid-template-columns:1fr;gap:24px;max-width:900px;margin:0 auto}',
-      '.card{background:#0a0a0a;border:1px solid #d4af7f;border-radius:12px;overflow:hidden;transition:all .3s ease;display:grid;grid-template-columns:260px 1fr;gap:24px;padding:24px;text-decoration:none;color:inherit;align-items:center}',
-      '.card-even{grid-template-columns:1fr 260px}',
-      '.card-even .img-wrap{order:2}',
+      '.card{background:#0a0a0a;border:1px solid #d4af7f;border-radius:12px;overflow:hidden;transition:all .3s ease;display:grid;grid-template-columns:260px 1fr;gap:24px;padding:24px;text-decoration:none;color:inherit;align-items:start}',
       '.card:hover{border-color:#e8c99a;box-shadow:0 4px 20px rgba(212,175,127,.35);transform:translateY(-2px)}',
-      '.card-content{display:flex;flex-direction:column;justify-content:flex-start}',
+      '.card-content{display:flex;flex-direction:column;justify-content:flex-start;align-items:flex-start}',
       '.card-name{color:#d4af7f;font-size:1.5rem;font-weight:600;margin-bottom:8px}',
       '.card-dates{color:#d1d5db;font-size:1rem;margin-bottom:6px;font-weight:500}',
       '.card-location{color:#9ca3af;font-size:.9rem;margin-bottom:12px}',
@@ -76,7 +76,7 @@ export default async function handler(req, res) {
       '.img-wrap{width:260px;height:280px;flex-shrink:0}',
       '.card-img{width:260px;height:280px;border-radius:8px;object-fit:cover;object-position:center top;border:2px solid #d4af7f;display:block;background:#111}',
       '.card-placeholder{width:260px;height:280px;border-radius:8px;border:2px solid #d4af7f;background:#1a1a1a;display:flex;align-items:center;justify-content:center;color:#d4af7f;font-size:3rem}',
-      '.card-btn{display:inline-block;padding:10px 24px;background:transparent;color:#d4af7f;border:1px solid #d4af7f;border-radius:6px;font-size:1rem;font-weight:600;text-decoration:none;transition:all .2s}',
+      '.card-btn{display:inline-block;padding:10px 24px;background:transparent;color:#d4af7f;border:1px solid #d4af7f;border-radius:6px;font-size:1rem;font-weight:600;text-decoration:none;transition:all .2s;align-self:flex-start;white-space:nowrap}',
       '.card-btn:hover{background:#d4af7f;color:#000}',
       '.empty{text-align:center;padding:40px;color:#6b7280;font-size:1.1rem}',
     ].join('');

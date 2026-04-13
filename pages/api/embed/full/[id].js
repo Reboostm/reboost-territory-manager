@@ -177,7 +177,7 @@ body{font-family:Georgia,serif;background:transparent}
       <div class="rb-fp-field"><label class="rb-fp-label">Your Name</label><input class="rb-fp-input" id="rb-mname" placeholder="Jane Smith"></div>
       <div class="rb-fp-field"><label class="rb-fp-label">Relationship</label><select class="rb-fp-select" id="rb-mrel"><option>Family</option><option>Friend</option><option>Colleague</option><option>Other</option></select></div>
       <div class="rb-fp-field"><label class="rb-fp-label">Your Memory</label><textarea class="rb-fp-textarea" id="rb-mtext" placeholder="Share a favorite memory..."></textarea></div>
-      <div class="rb-fp-field"><label class="rb-fp-label">Photos (Optional)</label><input type="file" class="rb-fp-input" id="rb-mphoto" accept="image/*" style="padding:8px"></div>
+      <div class="rb-fp-field"><label class="rb-fp-label">Photos (Optional) - <span id="rb-photo-count">0/10 photos</span></label><input type="file" class="rb-fp-input" id="rb-mphoto" accept="image/*" style="padding:8px"></div>
       <button type="button" id="rb-add-photo-btn" style="background:#d97706;color:#fff;border:none;border-radius:6px;padding:8px 16px;font-size:.85rem;cursor:pointer;margin-bottom:12px;font-family:inherit">+ Add Another Photo</button>
       <div id="rb-mphoto-preview" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:16px;margin-bottom:12px"></div>
       <button class="rb-fp-submit" id="rb-msubmit">Share Memory</button>
@@ -274,14 +274,17 @@ body{font-family:Georgia,serif;background:transparent}
       }
     });
 
-    // Photo preview with accumulation
+    // Photo preview with accumulation (max 10 images)
     var selectedPhotos = [];
+    var maxPhotos = 10;
     var photoEl = document.getElementById('rb-mphoto');
     var addBtn = document.getElementById('rb-add-photo-btn');
 
     function updatePreview() {
       var preview = document.getElementById('rb-mphoto-preview');
+      var countEl = document.getElementById('rb-photo-count');
       preview.innerHTML = '';
+      if (countEl) countEl.textContent = selectedPhotos.length + '/' + maxPhotos + ' photos';
       selectedPhotos.forEach(function(dataUrl) {
         var img = document.createElement('img');
         img.src = dataUrl;
@@ -303,9 +306,15 @@ body{font-family:Georgia,serif;background:transparent}
     if (photoEl) {
       photoEl.addEventListener('change', function() {
         if (this.files.length === 0) return;
+        var msgEl = document.getElementById('rb-mmsg');
         Array.from(this.files).forEach(function(file) {
+          if (selectedPhotos.length >= maxPhotos) {
+            if (msgEl) msgEl.innerHTML = '<div class="rb-fp-error">Maximum ' + maxPhotos + ' photos allowed per memory.</div>';
+            return;
+          }
           var reader = new FileReader();
           reader.onload = function(e) {
+            if (selectedPhotos.length >= maxPhotos) return;
             // Compress image to reduce file size
             var img = new Image();
             img.onload = function() {

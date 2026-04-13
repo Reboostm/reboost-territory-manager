@@ -50,11 +50,8 @@ export default async function handler(req, res) {
             + '<span class="card-btn">Visit Obituary</span>'
             + '</div>';
           const imgHtml = '<div class="img-wrap">' + img + '</div>';
-          // Alternate: even index = image left, odd index = image right
-          const inner = i % 2 === 0
-            ? imgHtml + contentHtml
-            : contentHtml + imgHtml;
-          return '<a href="' + href + '" target="_top" class="card">' + inner + '</a>';
+          // Consistent layout: image always left, content always right
+          return '<a href="' + href + '" target="_top" class="card">' + imgHtml + contentHtml + '</a>';
         }).join('');
 
     const css = [
@@ -68,7 +65,6 @@ export default async function handler(req, res) {
       '.search::placeholder{color:#888}',
       '.grid{display:grid;grid-template-columns:1fr;gap:24px;max-width:900px;margin:0 auto}',
       '.card{background:#0a0a0a;border:1px solid #d4af7f;border-radius:12px;overflow:hidden;transition:all .3s ease;display:grid;grid-template-columns:260px 1fr;gap:24px;padding:24px;text-decoration:none;color:inherit;align-items:start}',
-      '.card:nth-child(odd){grid-template-columns:1fr 260px}',
       '.card:hover{border-color:#e8c99a;box-shadow:0 4px 20px rgba(212,175,127,.35);transform:translateY(-2px)}',
       '.card-content{display:flex;flex-direction:column;justify-content:flex-start;align-items:flex-start}',
       '.card-name{color:#d4af7f;font-size:1.5rem;font-weight:600;margin-bottom:8px}',

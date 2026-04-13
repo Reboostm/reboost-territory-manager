@@ -457,7 +457,7 @@ body{font-family:Georgia,serif;background:transparent}
   window.rbShare = function(platform, memorySharer) {
     var baseUrl = shareData.url;
     var personName = shareData.name;
-    var memoryText = memorySharer ? memorySharer + ' shared a memory of ' + personName : 'View ' + personName + '\'s obituary and share memories';
+    var memoryText = memorySharer ? memorySharer + ' shared a memory of ' + personName : 'View ' + personName + String.fromCharCode(39) + 's obituary and share memories';
     var fullText = memoryText + ': ' + baseUrl;
 
     var shareUrls = {

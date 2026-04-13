@@ -165,11 +165,12 @@ window.addEventListener('message',function(e){
 function fullPageCode(id, fullName, notifyUrl) {
   // Use server-rendered iframe approach for better performance and consistency
   const iframeId = `rb-full-iframe-${id}`;
+  const shareUrlParam = notifyUrl ? `?shareUrl=${encodeURIComponent(notifyUrl)}` : '';
   return `<!-- ReBoost Marketing – Full Obituary: ${fullName} -->
 <!-- Server-rendered full obituary page with memory wall. -->
 <iframe
   id="${iframeId}"
-  src="https://obituary-management-system.vercel.app/api/embed/full/${id}"
+  src="https://obituary-management-system.vercel.app/api/embed/full/${id}${shareUrlParam}"
   style="width: 100%; border: none; background: transparent; height: 10000px; display: block; overflow: hidden;"
   title="Full Obituary: ${fullName}"
   scrolling="no">

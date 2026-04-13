@@ -116,7 +116,7 @@ body{font-family:Georgia,serif;background:transparent}
 .rb-fp-dot.active{background:#d97706}
 .rb-fp-section-header{display:flex;align-items:center;gap:12px;margin:24px 0 12px}
 .rb-fp-section-line{height:1px;flex:1;background:#e5e7eb}
-.rb-fp-section-title{color:#b45309;font-size:1.1rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;white-space:nowrap}
+.rb-fp-section-title{color:#d4af7f;font-size:1.4rem;font-weight:800;text-transform:uppercase;letter-spacing:.15em;white-space:nowrap}
 .rb-fp-text{color:#374151;font-size:1rem;line-height:1.75}
 .rb-fp-services{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:8px}
 .rb-fp-service-card{background:#fef3c7;border:1px solid #fcd34d;border-radius:10px;padding:14px}
@@ -125,10 +125,10 @@ body{font-family:Georgia,serif;background:transparent}
 .rb-fp-service-loc{color:#4b5563;font-size:.82rem;margin-top:2px}
 .rb-fp-mw{margin-top:48px;background:linear-gradient(180deg,#1e1e2e 0%,#252533 100%);border-radius:20px;padding:40px 32px;border:1px solid rgba(217,119,6,.15);box-shadow:0 8px 32px rgba(0,0,0,.3)}
 .rb-fp-mw-title{color:#f59e0b;font-size:1.8rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;margin-bottom:40px;text-align:center;text-shadow:0 2px 8px rgba(0,0,0,.5)}
-.rb-fp-memory-card{background:linear-gradient(135deg,#13131f 0%,#1a1a26 100%);border:1px solid #2d2d3d;border-radius:14px;padding:20px;margin-bottom:18px;transition:all .3s ease}
-.rb-fp-memory-card:hover{border-color:#d97706;box-shadow:0 8px 20px rgba(217,119,6,.15);transform:translateY(-2px)}
+.rb-fp-memory-card{background:linear-gradient(135deg,#13131f 0%,#1a1a26 100%);border:2px solid #d4af7f;border-radius:14px;padding:20px;margin-bottom:18px;transition:all .3s ease;box-shadow:0 2px 8px rgba(212,175,127,.1)}
+.rb-fp-memory-card:hover{border-color:#f3c071;box-shadow:0 8px 20px rgba(212,175,127,.25);transform:translateY(-2px)}
 .rb-fp-memory-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-.rb-fp-memory-name{color:#f59e0b;font-size:1.4rem;font-weight:800;letter-spacing:.03em}
+.rb-fp-memory-name{color:#f59e0b;font-size:1.6rem;font-weight:800;letter-spacing:.03em}
 .rb-fp-memory-rel{font-size:.75rem;color:#d1d5db;background:rgba(217,119,6,.15);padding:4px 10px;border-radius:999px;border:1px solid rgba(217,119,6,.3);font-weight:600}
 .rb-fp-memory-text{color:#e5e7eb;font-size:.9rem;line-height:1.8;margin:12px 0}
 .rb-fp-memory-date{color:#9ca3af;font-size:.8rem;margin-top:12px;font-style:italic}
@@ -136,11 +136,12 @@ body{font-family:Georgia,serif;background:transparent}
 .rb-fp-memory-image{width:100%;aspect-ratio:1;border-radius:6px;border:1px solid #374151;overflow:hidden;cursor:pointer;transition:transform .2s}
 .rb-fp-memory-image:hover{transform:scale(1.05)}
 .rb-fp-memory-image img{width:100%;height:100%;object-fit:cover;cursor:pointer}
-.rb-fp-lightbox{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.9);z-index:9999;align-items:center;justify-content:center}
-.rb-fp-lightbox.active{display:flex}
-.rb-fp-lightbox-content{position:relative;width:90vw;max-width:60vw;height:auto;max-height:70vh;padding:20px;display:flex;align-items:center;justify-content:center}
-.rb-fp-lightbox-img{max-width:100%;max-height:100%;object-fit:contain}
-.rb-fp-lightbox-close{position:absolute;top:20px;right:20px;background:rgba(255,255,255,.3);color:#fff;border:none;width:40px;height:40px;border-radius:50%;font-size:24px;cursor:pointer}
+.rb-fp-lightbox{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.95);z-index:9999;align-items:center;justify-content:center;padding:20px}
+.rb-fp-lightbox.active{display:flex !important}
+.rb-fp-lightbox-content{position:relative;width:100%;height:auto;max-width:90vw;max-height:80vh;display:flex;align-items:center;justify-content:center}
+.rb-fp-lightbox-img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+.rb-fp-lightbox-close{position:absolute;top:16px;right:16px;background:rgba(212,175,127,.3);color:#d4af7f;border:none;width:48px;height:48px;border-radius:50%;font-size:28px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;z-index:10000}
+.rb-fp-lightbox-close:hover{background:rgba(212,175,127,.5);color:#f3c071}
 .rb-fp-form{background:#13131f;border:1px solid #374151;border-radius:10px;padding:20px;margin-top:16px}
 .rb-fp-form-title{color:#fff;font-size:.9rem;margin-bottom:14px}
 .rb-fp-field{margin-bottom:12px}
@@ -153,22 +154,22 @@ body{font-family:Georgia,serif;background:transparent}
 .rb-fp-submit:disabled{opacity:.6;cursor:default}
 .rb-fp-success{color:#34d399;font-size:.85rem;margin-top:8px}
 .rb-fp-error{color:#f87171;font-size:.85rem;margin-top:8px}
-.rb-fp-share-section{margin-top:32px;margin-bottom:40px;background:linear-gradient(135deg,rgba(217,119,6,.08) 0%,rgba(212,175,127,.04) 100%);border:1px solid rgba(217,119,6,.15);border-radius:16px;padding:32px 24px}
-.rb-fp-share-buttons{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
-.rb-fp-share-btn{background:#d97706;color:#fff;border:none;border-radius:12px;cursor:pointer;transition:all .3s ease;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px 20px;font-size:.85rem;font-weight:600;letter-spacing:.05em;min-width:90px;box-shadow:0 4px 12px rgba(217,119,6,.25)}
-.rb-fp-share-btn:hover{background:#b45309;transform:translateY(-2px);box-shadow:0 6px 16px rgba(217,119,6,.35)}
-.rb-fp-share-btn:active{transform:translateY(0);box-shadow:0 2px 8px rgba(217,119,6,.2)}
+.rb-fp-share-section{margin-top:32px;margin-bottom:40px;background:#000;border:none;border-radius:0;padding:40px 0;margin-left:calc(-50vw + 50%);margin-right:calc(-50vw + 50%);padding-left:calc(50vw - 50%);padding-right:calc(50vw - 50%)}
+.rb-fp-share-buttons{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;max-width:900px;margin:0 auto}
+.rb-fp-share-btn{background:#d4af7f;color:#000;border:none;border-radius:12px;cursor:pointer;transition:all .3s ease;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px 20px;font-size:.85rem;font-weight:700;letter-spacing:.08em;min-width:100px;box-shadow:0 4px 12px rgba(212,175,127,.3);text-transform:uppercase}
+.rb-fp-share-btn:hover{background:#f3c071;transform:translateY(-2px);box-shadow:0 6px 16px rgba(212,175,127,.4)}
+.rb-fp-share-btn:active{transform:translateY(0);box-shadow:0 2px 8px rgba(212,175,127,.2)}
 .rb-fp-memory-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
 .rb-fp-memory-actions{display:flex;gap:8px;align-items:center}
 .rb-fp-memory-share{background:rgba(217,119,6,.1);border:none;color:#d97706;cursor:pointer;padding:6px 8px;transition:all .2s;font-size:.85rem;border-radius:6px;font-weight:600;border:1px solid rgba(217,119,6,.2)}
 .rb-fp-memory-share:hover{background:rgba(217,119,6,.2);border-color:#d97706;transform:scale(1.08)}
 .rb-fp-memory-share svg{width:16px;height:16px}
-.rb-fp-qr-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.9);z-index:10000;align-items:center;justify-content:center;flex-direction:column}
-.rb-fp-qr-modal.active{display:flex}
-.rb-fp-qr-content{background:#1e1e2e;border:2px solid #d97706;border-radius:12px;padding:32px;text-align:center;position:relative;max-width:400px;color:#d1d5db}
-.rb-fp-qr-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#d97706;font-size:32px;cursor:pointer;transition:color .2s}
-.rb-fp-qr-close:hover{color:#f59e0b}
-.rb-fp-qr-content p{margin-top:16px;font-size:.9rem}
+.rb-fp-qr-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.95);z-index:10000;align-items:center;justify-content:center;flex-direction:column}
+.rb-fp-qr-modal.active{display:flex !important}
+.rb-fp-qr-content{background:#1e1e2e;border:3px solid #d4af7f;border-radius:16px;padding:40px;text-align:center;position:relative;max-width:450px;color:#d1d5db;box-shadow:0 8px 32px rgba(0,0,0,.8)}
+.rb-fp-qr-close{position:absolute;top:20px;right:20px;background:rgba(212,175,127,.2);border:none;color:#d4af7f;font-size:36px;cursor:pointer;transition:all .2s;width:44px;height:44px;padding:0;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.rb-fp-qr-close:hover{background:rgba(212,175,127,.4);color:#f3c071}
+.rb-fp-qr-content p{margin-top:20px;font-size:1rem;color:#d4af7f;font-weight:600;letter-spacing:.05em}
 </style>
 </head>
 <body>
@@ -185,7 +186,7 @@ body{font-family:Georgia,serif;background:transparent}
     ${o.survivors ? `<div class="rb-fp-section-header"><div class="rb-fp-section-line"></div><div class="rb-fp-section-title">Survived By</div><div class="rb-fp-section-line"></div></div><div class="rb-fp-text">${esc(o.survivors)}</div>` : ''}
     ${o.predeceased ? `<div class="rb-fp-section-header"><div class="rb-fp-section-line"></div><div class="rb-fp-section-title">Preceded in Death By</div><div class="rb-fp-section-line"></div></div><div class="rb-fp-text">${esc(o.predeceased)}</div>` : ''}
     ${servicesHtml}
-    <div class="rb-fp-share-section"><div class="rb-fp-section-header"><div class="rb-fp-section-line"></div><div class="rb-fp-section-title">Share This Tribute</div><div class="rb-fp-section-line"></div></div><div class="rb-fp-share-buttons"><button class="rb-fp-share-btn" data-platform="facebook" title="Share on Facebook">f<br>Facebook</button><button class="rb-fp-share-btn" data-platform="twitter" title="Share on Twitter">𝕏<br>Twitter</button><button class="rb-fp-share-btn" data-platform="email" title="Share via Email">✉<br>Email</button><button class="rb-fp-share-btn" data-platform="sms" title="Share via Text">✉<br>Text</button><button class="rb-fp-share-btn" data-platform="copy" title="Copy Link">🔗<br>Copy</button><button class="rb-fp-share-btn" data-platform="qr" title="Show QR Code">⊞<br>QR Code</button></div></div>
+    <div class="rb-fp-share-section"><div class="rb-fp-section-header"><div class="rb-fp-section-line"></div><div class="rb-fp-section-title">Share This Tribute</div><div class="rb-fp-section-line"></div></div><div class="rb-fp-share-buttons"><button class="rb-fp-share-btn" data-platform="facebook" title="Share on Facebook">Facebook</button><button class="rb-fp-share-btn" data-platform="twitter" title="Share on Twitter">Twitter</button><button class="rb-fp-share-btn" data-platform="email" title="Share via Email">Email</button><button class="rb-fp-share-btn" data-platform="sms" title="Share via Text">Text</button><button class="rb-fp-share-btn" data-platform="copy" title="Copy Link">Copy Link</button><button class="rb-fp-share-btn" data-platform="qr" title="Show QR Code">QR Code</button></div></div>
   </div>
   <div class="rb-fp-mw">
     <div class="rb-fp-mw-title">Memory Wall</div>
@@ -439,12 +440,20 @@ body{font-family:Georgia,serif;background:transparent}
   attachMemoryImageListeners();
 
   /* ---- Social Media Sharing ---- */
+  var getShareUrl = function() {
+    // Try to get shareUrl from query parameter (passed from embed code)
+    try {
+      var params = new URLSearchParams(window.location.search);
+      var shareUrl = params.get('shareUrl');
+      if (shareUrl) return decodeURIComponent(shareUrl);
+    } catch(e) {}
+    // Fallback to current location
+    try { return window.location.href; } catch(e) { return '${apiBase}/api/embed/full/${esc(id)}'; }
+  };
   var shareData = {
     obituaryId: obituaryId,
     name: '${esc(o.fullName)}',
-    url: (function() {
-      try { return window.location.href; } catch(e) { return '${apiBase}/api/embed/full/${esc(id)}'; }
-    })()
+    url: getShareUrl()
   };
 
   window.rbShare = function(platform, memorySharer) {

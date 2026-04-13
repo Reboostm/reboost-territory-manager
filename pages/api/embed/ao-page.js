@@ -61,8 +61,8 @@ export default async function handler(req, res) {
       '.title{color:#d4af7f;font-size:1.5rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px;font-weight:600;text-align:center}',
       '.subtitle{color:#d1d5db;font-size:1rem;text-align:center;margin-bottom:28px;line-height:1.6}',
       '.search-wrap{display:flex;justify-content:center;margin-bottom:32px}',
-      '.search{width:100%;max-width:500px;padding:12px 18px;background:#fff;border:1px solid #d4af7f;color:#000;border-radius:8px;font-size:1rem;font-family:Georgia,serif}',
-      '.search::placeholder{color:#999}',
+      '.search{width:100%;max-width:500px;padding:12px 18px;background:#fff;border:2px solid #d4af7f;color:#000;border-radius:8px;font-size:1rem;font-family:Georgia,serif;box-shadow:0 2px 8px rgba(0,0,0,0.3);outline:none}',
+      '.search::placeholder{color:#888}',
       '.grid{display:grid;grid-template-columns:1fr;gap:24px;max-width:900px;margin:0 auto}',
       '.card{background:#0a0a0a;border:1px solid #d4af7f;border-radius:12px;overflow:hidden;transition:all .3s ease;display:grid;grid-template-columns:260px 1fr;gap:24px;padding:24px;text-decoration:none;color:inherit;align-items:center}',
       '.card-even{grid-template-columns:1fr 260px}',
@@ -74,7 +74,7 @@ export default async function handler(req, res) {
       '.card-location{color:#9ca3af;font-size:.9rem;margin-bottom:12px}',
       '.card-bio{color:#d1d5db;font-size:.95rem;line-height:1.65;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:16px}',
       '.img-wrap{width:260px;height:280px;flex-shrink:0}',
-      '.card-img{width:260px;height:280px;border-radius:8px;object-fit:contain;object-position:center top;border:2px solid #d4af7f;display:block;background:#111}',
+      '.card-img{width:260px;height:280px;border-radius:8px;object-fit:cover;object-position:center top;border:2px solid #d4af7f;display:block;background:#111}',
       '.card-placeholder{width:260px;height:280px;border-radius:8px;border:2px solid #d4af7f;background:#1a1a1a;display:flex;align-items:center;justify-content:center;color:#d4af7f;font-size:3rem}',
       '.card-btn{display:inline-block;padding:10px 24px;background:transparent;color:#d4af7f;border:1px solid #d4af7f;border-radius:6px;font-size:1rem;font-weight:600;text-decoration:none;transition:all .2s}',
       '.card-btn:hover{background:#d4af7f;color:#000}',
@@ -96,10 +96,12 @@ export default async function handler(req, res) {
       + '<script>\n'
       + 'var items=Array.from(document.querySelectorAll(".card"));\n'
       + 'function doSearch(q){q=q.toLowerCase();items.forEach(function(c){var n=c.querySelector(".card-name");c.style.display=(!q||(n&&n.textContent.toLowerCase().indexOf(q)>-1))?"":"none";});}\n'
-      + 'function notifyHeight(){try{parent.postMessage({rbHeight:document.body.scrollHeight},"*");}catch(e){}}\n'
+      + 'function notifyHeight(){var h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight,document.body.offsetHeight);try{parent.postMessage({rbHeight:h},"*");}catch(e){}}\n'
       + 'window.addEventListener("load",notifyHeight);\n'
       + 'window.addEventListener("resize",notifyHeight);\n'
-      + 'setTimeout(notifyHeight,300);\n'
+      + 'setTimeout(notifyHeight,100);\n'
+      + 'setTimeout(notifyHeight,500);\n'
+      + 'setTimeout(notifyHeight,1500);\n'
       + '<\/script>\n'
       + '</body>\n'
       + '</html>';

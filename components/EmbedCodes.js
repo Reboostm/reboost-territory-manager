@@ -147,7 +147,7 @@ function allObituariesPageCode() {
 <iframe
   src="${API_BASE}/api/embed/ao-page"
   id="rb-ao-iframe"
-  style="width:100%;border:none;min-height:800px;display:block"
+  style="width:100%;border:none;min-height:4000px;display:block"
   scrolling="no"
   title="All Obituaries">
 </iframe>
@@ -155,7 +155,7 @@ function allObituariesPageCode() {
 window.addEventListener('message',function(e){
   if(e.data&&e.data.rbHeight){
     var f=document.getElementById('rb-ao-iframe');
-    if(f)f.style.height=(e.data.rbHeight+40)+'px';
+    if(f)f.style.height=(e.data.rbHeight+60)+'px';
   }
 });
 <\/script>`;

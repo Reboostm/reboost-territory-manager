@@ -164,28 +164,40 @@ window.addEventListener('message',function(e){
 // ─── 4. FULL OBITUARY PAGE ───────────────────────────────────────────────────
 function fullPageCode(id, fullName, notifyUrl) {
   // Use server-rendered iframe approach for better performance and consistency
+  const iframeId = `rb-full-iframe-${id}`;
   return `<!-- ReBoost Marketing – Full Obituary: ${fullName} -->
 <!-- Server-rendered full obituary page with memory wall. -->
 <iframe
+  id="${iframeId}"
   src="https://obituary-management-system.vercel.app/api/embed/full/${id}"
-  style="width: 100%; border: none; background: transparent;"
+  style="width: 100%; border: none; background: transparent; height: 5000px; display: block;"
   title="Full Obituary: ${fullName}"
-  scrolling="auto">
+  scrolling="no">
 </iframe>
 <script>
 // Auto-resize iframe to fit content
 (function(){
-  var iframe = document.querySelector('iframe');
-  if(iframe){
-    var resize = function(){
-      try {
-        iframe.style.height = (iframe.contentDocument.body.scrollHeight + 20) + 'px';
-      } catch(e) {}
-    };
-    iframe.onload = resize;
-    window.addEventListener('resize', resize);
+  var iframe = document.getElementById('${iframeId}');
+  if(!iframe) return;
+
+  var resize = function(){
+    try {
+      var h = iframe.contentDocument.body.scrollHeight;
+      if(h > 0) iframe.style.height = (h + 40) + 'px';
+    } catch(e) {
+      console.error('Resize error:', e);
+    }
+  };
+
+  iframe.onload = function() {
+    resize();
+    setTimeout(resize, 100);
     setTimeout(resize, 500);
-  }
+    setTimeout(resize, 1000);
+  };
+
+  window.addEventListener('resize', resize);
+  setTimeout(resize, 2000);
 })();
 </script>`;
 }

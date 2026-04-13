@@ -164,14 +164,6 @@ body{font-family:Georgia,serif;background:transparent}
 .rb-fp-memory-share{background:rgba(217,119,6,.1);border:none;color:#d97706;cursor:pointer;padding:6px 8px;transition:all .2s;font-size:.85rem;border-radius:6px;font-weight:600;border:1px solid rgba(217,119,6,.2)}
 .rb-fp-memory-share:hover{background:rgba(217,119,6,.2);border-color:#d97706;transform:scale(1.08)}
 .rb-fp-memory-share svg{width:16px;height:16px}
-.rb-fp-qr-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.95);z-index:10000;align-items:center;justify-content:center;flex-direction:column;visibility:hidden;opacity:0}
-.rb-fp-qr-modal.active{display:flex !important;visibility:visible;opacity:1}
-.rb-fp-qr-content{background:#1e1e2e;border:3px solid #d4af7f;border-radius:16px;padding:40px;text-align:center;position:relative;max-width:450px;color:#d1d5db;box-shadow:0 8px 32px rgba(0,0,0,.8);z-index:10001}
-.rb-fp-qr-close{position:absolute;top:20px;right:20px;background:rgba(212,175,127,.2);border:none;color:#d4af7f;font-size:36px;cursor:pointer;transition:all .2s;width:44px;height:44px;padding:0;border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:10002}
-.rb-fp-qr-close:hover{background:rgba(212,175,127,.4);color:#f3c071}
-.rb-fp-qr-content p{margin-top:20px;font-size:1rem;color:#d4af7f;font-weight:600;letter-spacing:.05em}
-#rb-qr-code{display:flex;align-items:center;justify-content:center;min-height:280px}
-#rb-qr-code canvas{display:block;max-width:100%;height:auto}
 </style>
 </head>
 <body>
@@ -188,7 +180,7 @@ body{font-family:Georgia,serif;background:transparent}
     ${o.survivors ? `<div class="rb-fp-section-header"><div class="rb-fp-section-line"></div><div class="rb-fp-section-title">Survived By</div><div class="rb-fp-section-line"></div></div><div class="rb-fp-text">${esc(o.survivors)}</div>` : ''}
     ${o.predeceased ? `<div class="rb-fp-section-header"><div class="rb-fp-section-line"></div><div class="rb-fp-section-title">Preceded in Death By</div><div class="rb-fp-section-line"></div></div><div class="rb-fp-text">${esc(o.predeceased)}</div>` : ''}
     ${servicesHtml}
-    <div class="rb-fp-share-section"><div style="text-align:center;margin-bottom:20px"><div class="rb-fp-section-title">Share This Tribute</div></div><div class="rb-fp-share-buttons"><button class="rb-fp-share-btn" data-platform="facebook" title="Share on Facebook">Facebook</button><button class="rb-fp-share-btn" data-platform="twitter" title="Share on Twitter">Twitter</button><button class="rb-fp-share-btn" data-platform="email" title="Share via Email">Email</button><button class="rb-fp-share-btn" data-platform="sms" title="Share via Text">Text</button><button class="rb-fp-share-btn" data-platform="copy" title="Copy Link">Copy Link</button><button class="rb-fp-share-btn" data-platform="qr" title="Show QR Code">QR Code</button></div></div>
+    <div class="rb-fp-share-section"><div style="text-align:center;margin-bottom:20px"><div class="rb-fp-section-title">Share This Tribute</div></div><div class="rb-fp-share-buttons"><button class="rb-fp-share-btn" data-platform="facebook" title="Share on Facebook">Facebook</button><button class="rb-fp-share-btn" data-platform="twitter" title="Share on Twitter">Twitter</button><button class="rb-fp-share-btn" data-platform="email" title="Share via Email">Email</button><button class="rb-fp-share-btn" data-platform="sms" title="Share via Text">Text</button><button class="rb-fp-share-btn" data-platform="copy" title="Copy Link">Copy Link</button></div></div>
   </div>
   <div class="rb-fp-mw">
     <div class="rb-fp-mw-title">Memory Wall</div>
@@ -469,8 +461,7 @@ body{font-family:Georgia,serif;background:transparent}
       twitter: 'https://twitter.com/intent/tweet?url=' + encodeURIComponent(baseUrl) + '&text=' + encodeURIComponent(memoryText),
       email: 'mailto:?subject=' + encodeURIComponent('Obituary: ' + personName) + '&body=' + encodeURIComponent(fullText),
       sms: 'sms:?body=' + encodeURIComponent(fullText),
-      copy: null,
-      qr: null
+      copy: null
     };
 
     if (platform === 'copy') {
@@ -493,45 +484,10 @@ body{font-family:Georgia,serif;background:transparent}
         }
         document.body.removeChild(ta);
       }
-    } else if (platform === 'qr') {
-      rbShowQRCode(baseUrl);
     } else if (shareUrls[platform]) {
       window.open(shareUrls[platform], '_blank', 'width=600,height=600');
     }
   };
-
-  function rbShowQRCode(url) {
-    var modal = document.getElementById('rb-qr-modal');
-    if (!modal) {
-      modal = document.createElement('div');
-      modal.id = 'rb-qr-modal';
-      modal.className = 'rb-fp-qr-modal active';
-      modal.innerHTML = '<div class="rb-fp-qr-content"><button class="rb-fp-qr-close">×</button><div id="rb-qr-code"></div><p>Scan to view obituary</p></div>';
-      document.body.appendChild(modal);
-      var closeBtn = modal.querySelector('.rb-fp-qr-close');
-      if (closeBtn) {
-        closeBtn.addEventListener('click', function() {
-          modal.classList.remove('active');
-        });
-      }
-    }
-    var qrDiv = document.getElementById('rb-qr-code');
-    qrDiv.innerHTML = '';
-    var script = document.createElement('script');
-    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcode.js/1.5.3/qrcode.min.js';
-    script.onload = function() {
-      try {
-        new QRCode(qrDiv, { text: url, width: 256, height: 256, colorDark: '#d97706', colorLight: '#1e1e2e' });
-      } catch(e) {
-        qrDiv.innerHTML = '<p style="color:#f87171">Could not generate QR code</p>';
-      }
-    };
-    script.onerror = function() {
-      qrDiv.innerHTML = '<p style="color:#f87171">Could not load QR code library</p>';
-    };
-    document.head.appendChild(script);
-    modal.classList.add('active');
-  }
 
   /* Share button event listeners */
   document.querySelectorAll('.rb-fp-share-btn').forEach(function(btn) {

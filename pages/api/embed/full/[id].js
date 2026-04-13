@@ -399,15 +399,7 @@ body{font-family:Georgia,serif;background:transparent}
         }).join('');
         // Attach click handlers to newly loaded memory images
         attachMemoryImageListeners();
-        // Re-attach share button listeners for newly loaded memories
-        document.querySelectorAll('.rb-fp-memory-share').forEach(function(btn) {
-          btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            var sharer = this.getAttribute('data-sharer');
-            rbShare('facebook', sharer);
-          });
-        });
+        // Re-attach share button listeners will be done after rbShare function is defined
         setTimeout(notifyHeight, 100);
         document.querySelectorAll('#rb-memories img').forEach(function(img) { img.addEventListener('load', notifyHeight); });
       });
@@ -537,15 +529,25 @@ body{font-family:Georgia,serif;background:transparent}
     });
   });
 
-  /* Memory card share button listeners */
-  document.querySelectorAll('.rb-fp-memory-share').forEach(function(btn) {
-    btn.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      var sharer = this.getAttribute('data-sharer');
-      rbShare('facebook', sharer);
+  /* Attach share button listeners */
+  function attachShareListeners() {
+    document.querySelectorAll('.rb-fp-share-btn').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        rbShare(this.dataset.platform);
+      });
     });
-  });
+    document.querySelectorAll('.rb-fp-memory-share').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var sharer = this.getAttribute('data-sharer');
+        rbShare('facebook', sharer);
+      });
+    });
+  }
+
+  attachShareListeners();
 
   /* ---- Initial Height & Resize Events ---- */
   notifyHeight();

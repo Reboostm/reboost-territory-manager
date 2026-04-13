@@ -101,7 +101,7 @@ export default function NotificationSettings() {
         {/* Director Emails */}
         <div>
           <label className="block text-gray-300 text-sm font-medium mb-2">
-            Director Email(s)
+            Director Emails
           </label>
           <p className="text-gray-500 text-xs mb-3">
             For multiple emails, separate with commas (e.g., email1@example.com, email2@example.com)
@@ -172,7 +172,7 @@ export default function NotificationSettings() {
           <p className="font-medium text-gray-300 mb-2">How it works:</p>
           <ul className="list-disc list-inside space-y-1">
             <li>When a new memory is posted, it's scanned for bad keywords</li>
-            <li>If flagged, an email is sent to all listed director email(s)</li>
+            <li>If flagged, an email is sent to all listed director emails</li>
             <li>Director can review and delete/hide from the memory wall</li>
             <li>API key is stored securely in Firebase</li>
           </ul>

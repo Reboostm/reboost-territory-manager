@@ -175,29 +175,17 @@ function fullPageCode(id, fullName, notifyUrl) {
   scrolling="no">
 </iframe>
 <script>
-// Auto-resize iframe to fit content
+// Auto-resize iframe based on postMessage from iframe content
 (function(){
   var iframe = document.getElementById('${iframeId}');
   if(!iframe) return;
 
-  var resize = function(){
-    try {
-      var h = iframe.contentDocument.body.scrollHeight;
-      if(h > 0) iframe.style.height = (h + 40) + 'px';
-    } catch(e) {
-      console.error('Resize error:', e);
+  // Listen for height messages from iframe
+  window.addEventListener('message', function(e) {
+    if (e.data && e.data.rbHeight && e.data.rbHeight > 100) {
+      iframe.style.height = (e.data.rbHeight + 80) + 'px';
     }
-  };
-
-  iframe.onload = function() {
-    resize();
-    setTimeout(resize, 100);
-    setTimeout(resize, 500);
-    setTimeout(resize, 1000);
-  };
-
-  window.addEventListener('resize', resize);
-  setTimeout(resize, 2000);
+  });
 })();
 </script>`;
 }

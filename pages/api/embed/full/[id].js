@@ -83,7 +83,7 @@ export default async function handler(req, res) {
             ? m.createdAt.toDate().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
             : '';
           const photosHtml = m.photos && m.photos.length > 0
-            ? `<div class="rb-fp-memory-images" id="rb-mphoto-${idx}">${m.photos.map((p, pi) => `<div class="rb-fp-memory-image" onclick="rbMemoryPhoto(${idx},${pi})"><img src="${esc(p)}" alt="Memory photo"></div>`).join('')}</div>`
+            ? `<div class="rb-fp-memory-images">${m.photos.map((p) => `<div class="rb-fp-memory-image"><img src="${esc(p)}" alt="Memory photo"></div>`).join('')}</div>`
             : '';
           return `<div class="rb-fp-memory-card"><div class="rb-fp-memory-header"><span class="rb-fp-memory-name">${esc(m.name)}</span><span class="rb-fp-memory-rel">${esc(m.relationship)}</span></div><div class="rb-fp-memory-text">${esc(m.memoryText)}</div>${photosHtml}${mDate ? '<div class="rb-fp-memory-date">' + esc(mDate) + '</div>' : ''}</div>`;
         }).join('');
@@ -171,7 +171,8 @@ body{font-family:Georgia,serif;background:transparent}
       <div class="rb-fp-field"><label class="rb-fp-label">Your Name</label><input class="rb-fp-input" id="rb-mname" placeholder="Jane Smith"></div>
       <div class="rb-fp-field"><label class="rb-fp-label">Relationship</label><select class="rb-fp-select" id="rb-mrel"><option>Family</option><option>Friend</option><option>Colleague</option><option>Other</option></select></div>
       <div class="rb-fp-field"><label class="rb-fp-label">Your Memory</label><textarea class="rb-fp-textarea" id="rb-mtext" placeholder="Share a favorite memory..."></textarea></div>
-      <div class="rb-fp-field"><label class="rb-fp-label">Photos (Optional - select all at once)</label><input type="file" class="rb-fp-input" id="rb-mphoto" accept="image/*" multiple style="padding:8px"></div>
+      <div class="rb-fp-field"><label class="rb-fp-label">Photos (Optional)</label><input type="file" class="rb-fp-input" id="rb-mphoto" accept="image/*" style="padding:8px"></div>
+      <button type="button" id="rb-add-photo-btn" style="background:#d97706;color:#fff;border:none;border-radius:6px;padding:8px 16px;font-size:.85rem;cursor:pointer;margin-bottom:12px;font-family:inherit">+ Add Another Photo</button>
       <div id="rb-mphoto-preview" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:16px;margin-bottom:12px"></div>
       <button class="rb-fp-submit" id="rb-msubmit">Share Memory</button>
       <div id="rb-mmsg"></div>
@@ -227,24 +228,9 @@ body{font-family:Georgia,serif;background:transparent}
       btn.disabled = true;
       btn.textContent = 'Submitting...';
 
-      // Handle photo uploads
-      var photos = [];
-      if (photoEl && photoEl.files && photoEl.files.length > 0) {
-        var fileCount = 0;
-        Array.from(photoEl.files).forEach(function(file) {
-          var reader = new FileReader();
-          reader.onload = function(e) {
-            photos.push(e.target.result);
-            fileCount++;
-            if (fileCount === photoEl.files.length) {
-              submitMemory(name, rel, text, photos);
-            }
-          };
-          reader.readAsDataURL(file);
-        });
-      } else {
-        submitMemory(name, rel, text, photos);
-      }
+      // Use accumulated photos
+      var photos = selectedPhotos.length > 0 ? selectedPhotos : [];
+      submitMemory(name, rel, text, photos);
 
       function submitMemory(name, rel, text, photos) {
         fetch(apiBase + '/api/memories', {
@@ -256,6 +242,7 @@ body{font-family:Georgia,serif;background:transparent}
         .then(function() {
           nameEl.value = '';
           textEl.value = '';
+          selectedPhotos = [];
           if (photoEl) {
             photoEl.value = '';
             document.getElementById('rb-mphoto-preview').innerHTML = '';
@@ -274,27 +261,51 @@ body{font-family:Georgia,serif;background:transparent}
       }
     });
 
-    // Photo preview
+    // Photo preview with accumulation
+    var selectedPhotos = [];
     var photoEl = document.getElementById('rb-mphoto');
+    var addBtn = document.getElementById('rb-add-photo-btn');
+
+    function updatePreview() {
+      var preview = document.getElementById('rb-mphoto-preview');
+      preview.innerHTML = '';
+      selectedPhotos.forEach(function(dataUrl) {
+        var img = document.createElement('img');
+        img.src = dataUrl;
+        img.style.width = '160px';
+        img.style.height = '160px';
+        img.style.objectFit = 'cover';
+        img.style.borderRadius = '8px';
+        img.style.border = '1px solid #374151';
+        img.style.cursor = 'pointer';
+        img.title = 'Click to remove';
+        img.onclick = function() {
+          selectedPhotos = selectedPhotos.filter(function(p) { return p !== dataUrl; });
+          updatePreview();
+        };
+        preview.appendChild(img);
+      });
+    }
+
     if (photoEl) {
       photoEl.addEventListener('change', function() {
-        var preview = document.getElementById('rb-mphoto-preview');
-        preview.innerHTML = '';
         if (this.files.length === 0) return;
         Array.from(this.files).forEach(function(file) {
           var reader = new FileReader();
           reader.onload = function(e) {
-            var img = document.createElement('img');
-            img.src = e.target.result;
-            img.style.width = '160px';
-            img.style.height = '160px';
-            img.style.objectFit = 'cover';
-            img.style.borderRadius = '8px';
-            img.style.border = '1px solid #374151';
-            preview.appendChild(img);
+            selectedPhotos.push(e.target.result);
+            updatePreview();
           };
           reader.readAsDataURL(file);
         });
+        this.value = '';
+      });
+    }
+
+    if (addBtn) {
+      addBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        photoEl.click();
       });
     }
   }
@@ -321,35 +332,7 @@ body{font-family:Georgia,serif;background:transparent}
     return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
-  /* ---- Memory Photo Rotation ---- */
-  var memoryPhotoIntervals = {};
-  window.rbMemoryPhoto = function(memIdx, photoIdx) {
-    var el = document.getElementById('rb-mphoto-' + memIdx);
-    if (!el) return;
-    var imgs = el.querySelectorAll('img');
-    if (imgs.length <= 1) return;
-
-    if (memoryPhotoIntervals[memIdx]) clearInterval(memoryPhotoIntervals[memIdx]);
-
-    var idx = photoIdx;
-    memoryPhotoIntervals[memIdx] = setInterval(function() {
-      idx = (idx + 1) % imgs.length;
-      imgs.forEach(function(img, i) { img.style.display = i === idx ? 'block' : 'none'; });
-    }, 4000);
-
-    imgs.forEach(function(img, i) { img.style.display = i === photoIdx ? 'block' : 'none'; });
-  };
-
-  /* Initialize photo rotation on load */
-  setTimeout(function() {
-    document.querySelectorAll('[id^="rb-mphoto-"]').forEach(function(el) {
-      var memIdx = el.id.replace('rb-mphoto-', '');
-      var imgs = el.querySelectorAll('img');
-      if (imgs.length > 1) {
-        window.rbMemoryPhoto(memIdx, 0);
-      }
-    });
-  }, 100);
+  /* All photos displayed in grid - no rotation */
 })();
 </script>
 </body>

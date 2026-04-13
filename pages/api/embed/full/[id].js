@@ -85,7 +85,7 @@ export default async function handler(req, res) {
           const photosHtml = m.photos && m.photos.length > 0
             ? `<div class="rb-fp-memory-images">${m.photos.map((p, i) => `<div class="rb-fp-memory-image" data-img="${esc(p)}"><img src="${esc(p)}" alt="Memory photo"></div>`).join('')}</div>`
             : '';
-          return `<div class="rb-fp-memory-card"><div class="rb-fp-memory-header"><span class="rb-fp-memory-name">${esc(m.name)}</span><div style="display:flex;align-items:center;gap:8px"><span class="rb-fp-memory-rel">${esc(m.relationship)}</span><button class="rb-fp-memory-share" data-sharer="${esc(m.name)}" title="Share this memory" style="font-size:1rem;line-height:1">↗</button></div></div><div class="rb-fp-memory-text">${esc(m.memoryText)}</div>${photosHtml}${mDate ? '<div class="rb-fp-memory-date">' + esc(mDate) + '</div>' : ''}</div>`;
+          return `<div class="rb-fp-memory-card"><div class="rb-fp-memory-header"><span class="rb-fp-memory-name">${esc(m.name)}</span><div style="display:flex;align-items:center;gap:8px"><span class="rb-fp-memory-rel">${esc(m.relationship)}</span><button class="rb-fp-memory-share" data-sharer="${esc(m.name)}" title="Share this memory">Share</button></div></div><div class="rb-fp-memory-text">${esc(m.memoryText)}</div>${photosHtml}${mDate ? '<div class="rb-fp-memory-date">' + esc(mDate) + '</div>' : ''}</div>`;
         }).join('');
 
     const apiBase = 'https://obituary-management-system.vercel.app';
@@ -123,14 +123,15 @@ body{font-family:Georgia,serif;background:transparent}
 .rb-fp-service-type{color:#92400e;font-size:1rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}
 .rb-fp-service-datetime{color:#1f2937;font-size:.9rem;font-weight:600}
 .rb-fp-service-loc{color:#4b5563;font-size:.82rem;margin-top:2px}
-.rb-fp-mw{margin-top:32px;background:#1e1e2e;border-radius:12px;padding:24px}
-.rb-fp-mw-title{color:#f59e0b;font-size:1.4rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;margin-bottom:24px;text-align:center}
-.rb-fp-memory-card{background:#13131f;border:1px solid #374151;border-radius:10px;padding:16px;margin-bottom:12px}
-.rb-fp-memory-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.rb-fp-memory-name{color:#f59e0b;font-size:1.3rem;font-weight:700}
-.rb-fp-memory-rel{font-size:.75rem;color:#9ca3af;background:#374151;padding:2px 8px;border-radius:999px}
-.rb-fp-memory-text{color:#d1d5db;font-size:.875rem;line-height:1.65}
-.rb-fp-memory-date{color:#6b7280;font-size:.75rem;margin-top:8px}
+.rb-fp-mw{margin-top:48px;background:linear-gradient(180deg,#1e1e2e 0%,#252533 100%);border-radius:20px;padding:40px 32px;border:1px solid rgba(217,119,6,.15);box-shadow:0 8px 32px rgba(0,0,0,.3)}
+.rb-fp-mw-title{color:#f59e0b;font-size:1.8rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;margin-bottom:40px;text-align:center;text-shadow:0 2px 8px rgba(0,0,0,.5)}
+.rb-fp-memory-card{background:linear-gradient(135deg,#13131f 0%,#1a1a26 100%);border:1px solid #2d2d3d;border-radius:14px;padding:20px;margin-bottom:18px;transition:all .3s ease}
+.rb-fp-memory-card:hover{border-color:#d97706;box-shadow:0 8px 20px rgba(217,119,6,.15);transform:translateY(-2px)}
+.rb-fp-memory-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.rb-fp-memory-name{color:#f59e0b;font-size:1.4rem;font-weight:800;letter-spacing:.03em}
+.rb-fp-memory-rel{font-size:.75rem;color:#d1d5db;background:rgba(217,119,6,.15);padding:4px 10px;border-radius:999px;border:1px solid rgba(217,119,6,.3);font-weight:600}
+.rb-fp-memory-text{color:#e5e7eb;font-size:.9rem;line-height:1.8;margin:12px 0}
+.rb-fp-memory-date{color:#9ca3af;font-size:.8rem;margin-top:12px;font-style:italic}
 .rb-fp-memory-images{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin:16px 0}
 .rb-fp-memory-image{width:100%;aspect-ratio:1;border-radius:6px;border:1px solid #374151;overflow:hidden;cursor:pointer;transition:transform .2s}
 .rb-fp-memory-image:hover{transform:scale(1.05)}
@@ -152,15 +153,15 @@ body{font-family:Georgia,serif;background:transparent}
 .rb-fp-submit:disabled{opacity:.6;cursor:default}
 .rb-fp-success{color:#34d399;font-size:.85rem;margin-top:8px}
 .rb-fp-error{color:#f87171;font-size:.85rem;margin-top:8px}
-.rb-fp-share-section{margin-top:24px;margin-bottom:24px}
-.rb-fp-share-buttons{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
-.rb-fp-share-btn{background:rgba(212,175,127,.1);border:1px solid rgba(212,175,127,.3);color:#d97706;width:44px;height:44px;border-radius:8px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;padding:0}
-.rb-fp-share-btn:hover{background:#d97706;color:#fff;border-color:#d97706;transform:scale(1.05)}
-.rb-fp-share-btn svg{width:20px;height:20px}
+.rb-fp-share-section{margin-top:32px;margin-bottom:40px;background:linear-gradient(135deg,rgba(217,119,6,.08) 0%,rgba(212,175,127,.04) 100%);border:1px solid rgba(217,119,6,.15);border-radius:16px;padding:32px 24px}
+.rb-fp-share-buttons{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+.rb-fp-share-btn{background:#d97706;color:#fff;border:none;border-radius:12px;cursor:pointer;transition:all .3s ease;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px 20px;font-size:.85rem;font-weight:600;letter-spacing:.05em;min-width:90px;box-shadow:0 4px 12px rgba(217,119,6,.25)}
+.rb-fp-share-btn:hover{background:#b45309;transform:translateY(-2px);box-shadow:0 6px 16px rgba(217,119,6,.35)}
+.rb-fp-share-btn:active{transform:translateY(0);box-shadow:0 2px 8px rgba(217,119,6,.2)}
 .rb-fp-memory-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
 .rb-fp-memory-actions{display:flex;gap:8px;align-items:center}
-.rb-fp-memory-share{background:none;border:none;color:#6b7280;cursor:pointer;padding:4px;transition:color .2s;font-size:0}
-.rb-fp-memory-share:hover{color:#d97706}
+.rb-fp-memory-share{background:rgba(217,119,6,.1);border:none;color:#d97706;cursor:pointer;padding:6px 8px;transition:all .2s;font-size:.85rem;border-radius:6px;font-weight:600;border:1px solid rgba(217,119,6,.2)}
+.rb-fp-memory-share:hover{background:rgba(217,119,6,.2);border-color:#d97706;transform:scale(1.08)}
 .rb-fp-memory-share svg{width:16px;height:16px}
 .rb-fp-qr-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.9);z-index:10000;align-items:center;justify-content:center;flex-direction:column}
 .rb-fp-qr-modal.active{display:flex}
@@ -184,7 +185,7 @@ body{font-family:Georgia,serif;background:transparent}
     ${o.survivors ? `<div class="rb-fp-section-header"><div class="rb-fp-section-line"></div><div class="rb-fp-section-title">Survived By</div><div class="rb-fp-section-line"></div></div><div class="rb-fp-text">${esc(o.survivors)}</div>` : ''}
     ${o.predeceased ? `<div class="rb-fp-section-header"><div class="rb-fp-section-line"></div><div class="rb-fp-section-title">Preceded in Death By</div><div class="rb-fp-section-line"></div></div><div class="rb-fp-text">${esc(o.predeceased)}</div>` : ''}
     ${servicesHtml}
-    <div class="rb-fp-share-section"><div class="rb-fp-section-header"><div class="rb-fp-section-line"></div><div class="rb-fp-section-title">Share This Tribute</div><div class="rb-fp-section-line"></div></div><div class="rb-fp-share-buttons"><button class="rb-fp-share-btn" data-platform="facebook" title="Share on Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></button><button class="rb-fp-share-btn" data-platform="twitter" title="Share on Twitter"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.953 4.57a10 10 0 002.856-10.986c-3.477.476-6.7 2.237-8.68 4.967.2-1.993-.641-3.8-2.154-5.597-.897 1.8-2.289 3.393-4.113 4.638A4.848 4.848 0 003 12c0 .396.023.787.068 1.171a13.995 13.995 0 0010.079-6.572c.701 1.495.79 3.418.26 5.042 3.355-1.215 6.282-4.69 6.972-8.84.601 4.383-.298 8.946-3.425 12.108-.675.67-1.404 1.295-2.168 1.87 5.524-.975 9.677-5.218 10.201-10.575.057-.629.076-1.263.076-1.9z"/></svg></button><button class="rb-fp-share-btn" data-platform="email" title="Share via Email"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></button><button class="rb-fp-share-btn" data-platform="sms" title="Share via Text"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 8H6v-2h8v2zm6-4H6v-2h14v2z"/></svg></button><button class="rb-fp-share-btn" data-platform="copy" title="Copy Link"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 2h-4.18C14.4.84 13.3 0 12 0c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm7 18H5V4h2v3h10V4h2v16z"/></svg></button><button class="rb-fp-share-btn" data-platform="qr" title="Show QR Code"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 11h8V3H3v8zm4-4h4v4H7V7zm10-4v8h8V3h-8zm4 4h4v4h-4V7zM3 21h8v-8H3v8zm4-4h4v4H7v-4zm10-4h3v2h-3zm0 4h8v-2h-8zm3-8h-3v3h3z"/></svg></button></div></div>
+    <div class="rb-fp-share-section"><div class="rb-fp-section-header"><div class="rb-fp-section-line"></div><div class="rb-fp-section-title">Share This Tribute</div><div class="rb-fp-section-line"></div></div><div class="rb-fp-share-buttons"><button class="rb-fp-share-btn" data-platform="facebook" title="Share on Facebook">f<br>Facebook</button><button class="rb-fp-share-btn" data-platform="twitter" title="Share on Twitter">𝕏<br>Twitter</button><button class="rb-fp-share-btn" data-platform="email" title="Share via Email">✉<br>Email</button><button class="rb-fp-share-btn" data-platform="sms" title="Share via Text">✉<br>Text</button><button class="rb-fp-share-btn" data-platform="copy" title="Copy Link">🔗<br>Copy</button><button class="rb-fp-share-btn" data-platform="qr" title="Show QR Code">⊞<br>QR Code</button></div></div>
   </div>
   <div class="rb-fp-mw">
     <div class="rb-fp-mw-title">Memory Wall</div>
@@ -395,7 +396,7 @@ body{font-family:Georgia,serif;background:transparent}
         }
         el.innerHTML = memories.map(function(m) {
           var d = m.createdAt ? new Date(m.createdAt.seconds ? m.createdAt.seconds * 1000 : m.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
-          return '<div class="rb-fp-memory-card"><div class="rb-fp-memory-header"><span class="rb-fp-memory-name">' + escJs(m.name) + '</span><div style="display:flex;align-items:center;gap:8px"><span class="rb-fp-memory-rel">' + escJs(m.relationship) + '</span><button class="rb-fp-memory-share" data-sharer="' + escJs(m.name) + '" title="Share this memory"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.06c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.56 9.31 6.88 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.76 0 1.44-.3 1.96-.77l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg></button></div></div><div class="rb-fp-memory-text">' + escJs(m.memoryText) + '</div>' + (m.photos && m.photos.length > 0 ? '<div class="rb-fp-memory-images">' + m.photos.map(function(p) { var esc_p = p.replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); return '<div class="rb-fp-memory-image" data-img="' + esc_p + '"><img src="' + esc_p + '" alt="Memory photo"></div>'; }).join('') + '</div>' : '') + (d ? '<div class="rb-fp-memory-date">' + d + '</div>' : '') + '</div>';
+          return '<div class="rb-fp-memory-card"><div class="rb-fp-memory-header"><span class="rb-fp-memory-name">' + escJs(m.name) + '</span><div style="display:flex;align-items:center;gap:8px"><span class="rb-fp-memory-rel">' + escJs(m.relationship) + '</span><button class="rb-fp-memory-share" data-sharer="' + escJs(m.name) + '" title="Share this memory">Share</button></div></div><div class="rb-fp-memory-text">' + escJs(m.memoryText) + '</div>' + (m.photos && m.photos.length > 0 ? '<div class="rb-fp-memory-images">' + m.photos.map(function(p) { var esc_p = p.replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); return '<div class="rb-fp-memory-image" data-img="' + esc_p + '"><img src="' + esc_p + '" alt="Memory photo"></div>'; }).join('') + '</div>' : '') + (d ? '<div class="rb-fp-memory-date">' + d + '</div>' : '') + '</div>';
         }).join('');
         // Attach click handlers to newly loaded memory images
         attachMemoryImageListeners();

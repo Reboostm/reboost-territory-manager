@@ -142,11 +142,23 @@ else{document.addEventListener('DOMContentLoaded',function(){setTimeout(function
 
 // ─── 3. ALL OBITUARIES LISTING PAGE ──────────────────────────────────────────
 function allObituariesPageCode() {
-  return `<!-- ReBoost Marketing – All Obituaries Listing Page -->
-<!-- Paste into a Custom HTML block on your all obituaries/memorial page. -->
-<!-- JavaScript is hosted on Vercel — GHL cannot modify it. Auto-updates. -->
-<div id="rb-ao-root"></div>
-<script src="${API_BASE}/api/embed/ao.js"><\/script>`;
+  return `<!-- ReBoost Marketing – All Obituaries Page -->
+<!-- Paste into a Custom HTML block. Auto-updates when you add obituaries. -->
+<iframe
+  src="${API_BASE}/api/embed/ao-page"
+  id="rb-ao-iframe"
+  style="width:100%;border:none;min-height:800px;display:block"
+  scrolling="no"
+  title="All Obituaries">
+</iframe>
+<script>
+window.addEventListener('message',function(e){
+  if(e.data&&e.data.rbHeight){
+    var f=document.getElementById('rb-ao-iframe');
+    if(f)f.style.height=(e.data.rbHeight+40)+'px';
+  }
+});
+<\/script>`;
 }
 
 // ─── 4. FULL OBITUARY PAGE ───────────────────────────────────────────────────

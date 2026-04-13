@@ -170,7 +170,7 @@ function fullPageCode(id, fullName, notifyUrl) {
 <iframe
   id="${iframeId}"
   src="https://obituary-management-system.vercel.app/api/embed/full/${id}"
-  style="width: 100%; border: none; background: transparent; height: 5000px; display: block;"
+  style="width: 100%; border: none; background: transparent; height: 10000px; display: block; overflow: hidden;"
   title="Full Obituary: ${fullName}"
   scrolling="no">
 </iframe>

@@ -131,7 +131,7 @@ body{font-family:Georgia,serif;background:transparent}
 .rb-fp-memory-rel{font-size:.75rem;color:#9ca3af;background:#374151;padding:2px 8px;border-radius:999px}
 .rb-fp-memory-text{color:#d1d5db;font-size:.875rem;line-height:1.65}
 .rb-fp-memory-date{color:#6b7280;font-size:.75rem;margin-top:8px}
-.rb-fp-memory-images{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px;margin:12px 0}
+.rb-fp-memory-images{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin:12px 0}
 .rb-fp-memory-image{width:100%;aspect-ratio:1;border-radius:6px;border:1px solid #374151;overflow:hidden;cursor:pointer}
 .rb-fp-memory-image img{width:100%;height:100%;object-fit:cover}
 .rb-fp-form{background:#13131f;border:1px solid #374151;border-radius:10px;padding:20px;margin-top:16px}
@@ -171,8 +171,8 @@ body{font-family:Georgia,serif;background:transparent}
       <div class="rb-fp-field"><label class="rb-fp-label">Your Name</label><input class="rb-fp-input" id="rb-mname" placeholder="Jane Smith"></div>
       <div class="rb-fp-field"><label class="rb-fp-label">Relationship</label><select class="rb-fp-select" id="rb-mrel"><option>Family</option><option>Friend</option><option>Colleague</option><option>Other</option></select></div>
       <div class="rb-fp-field"><label class="rb-fp-label">Your Memory</label><textarea class="rb-fp-textarea" id="rb-mtext" placeholder="Share a favorite memory..."></textarea></div>
-      <div class="rb-fp-field"><label class="rb-fp-label">Photos (Optional)</label><input type="file" class="rb-fp-input" id="rb-mphoto" accept="image/*" multiple style="padding:8px"></div>
-      <div id="rb-mphoto-preview" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-bottom:12px"></div>
+      <div class="rb-fp-field"><label class="rb-fp-label">Photos (Optional)</label><input type="file" class="rb-fp-input" id="rb-mphoto" accept="image/*" multiple style="padding:8px" multiple></div>
+      <div id="rb-mphoto-preview" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;margin-bottom:12px"></div>
       <button class="rb-fp-submit" id="rb-msubmit">Share Memory</button>
       <div id="rb-mmsg"></div>
     </div>
@@ -256,9 +256,12 @@ body{font-family:Georgia,serif;background:transparent}
         .then(function() {
           nameEl.value = '';
           textEl.value = '';
-          photoEl.value = '';
-          document.getElementById('rb-mphoto-preview').innerHTML = '';
+          if (photoEl) {
+            photoEl.value = '';
+            document.getElementById('rb-mphoto-preview').innerHTML = '';
+          }
           msgEl.innerHTML = '<div class="rb-fp-success">&#10003; Your memory has been shared. Thank you.</div>';
+          setTimeout(function() { msgEl.innerHTML = ''; }, 3000);
           refreshMemories();
         })
         .catch(function() {
@@ -277,15 +280,17 @@ body{font-family:Georgia,serif;background:transparent}
       photoEl.addEventListener('change', function() {
         var preview = document.getElementById('rb-mphoto-preview');
         preview.innerHTML = '';
+        if (this.files.length === 0) return;
         Array.from(this.files).forEach(function(file) {
           var reader = new FileReader();
           reader.onload = function(e) {
             var img = document.createElement('img');
             img.src = e.target.result;
-            img.style.width = '80px';
-            img.style.height = '80px';
+            img.style.width = '120px';
+            img.style.height = '120px';
             img.style.objectFit = 'cover';
-            img.style.borderRadius = '6px';
+            img.style.borderRadius = '8px';
+            img.style.border = '1px solid #374151';
             preview.appendChild(img);
           };
           reader.readAsDataURL(file);

@@ -123,7 +123,7 @@ body{font-family:Georgia,serif;background:transparent}
 .rb-fp-service-type{color:#92400e;font-size:1rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}
 .rb-fp-service-datetime{color:#1f2937;font-size:.9rem;font-weight:600}
 .rb-fp-service-loc{color:#4b5563;font-size:.82rem;margin-top:2px}
-.rb-fp-mw{margin-top:-32px;background:linear-gradient(180deg,#1e1e2e 0%,#252533 100%);border-radius:0;padding:40px 32px;border:none;border-top:1px solid rgba(217,119,6,.15);box-shadow:none}
+.rb-fp-mw{margin-top:20px;background:linear-gradient(180deg,#1e1e2e 0%,#252533 100%);border-radius:0;padding:40px 32px;border:none;border-top:1px solid rgba(217,119,6,.15);box-shadow:none}
 .rb-fp-mw-title{color:#f59e0b;font-size:1.8rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;margin-bottom:40px;text-align:center;text-shadow:0 2px 8px rgba(0,0,0,.5)}
 .rb-fp-memory-card{background:linear-gradient(135deg,#13131f 0%,#1a1a26 100%);border:2px solid #d4af7f;border-radius:14px;padding:20px;margin-bottom:18px;transition:all .3s ease;box-shadow:0 2px 8px rgba(212,175,127,.1)}
 .rb-fp-memory-card:hover{border-color:#f3c071;box-shadow:0 8px 20px rgba(212,175,127,.25);transform:translateY(-2px)}
@@ -154,7 +154,7 @@ body{font-family:Georgia,serif;background:transparent}
 .rb-fp-submit:disabled{opacity:.6;cursor:default}
 .rb-fp-success{color:#34d399;font-size:.85rem;margin-top:8px}
 .rb-fp-error{color:#f87171;font-size:.85rem;margin-top:8px}
-.rb-fp-share-section{margin-top:32px;margin-bottom:0;margin-left:-999px;margin-right:-999px;background:#000;border:none;border-radius:0;padding:24px calc(32px + 999px);overflow:hidden}
+.rb-fp-share-section{margin-top:32px;margin-bottom:0;margin-left:-64px;margin-right:-64px;background:#000;border:none;border-radius:0;padding:24px calc(32px + 64px)}
 .rb-fp-share-buttons{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;max-width:900px;margin:0 auto}
 .rb-fp-share-btn{background:#d4af7f;color:#000;border:none;border-radius:12px;cursor:pointer;transition:all .3s ease;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px 20px;font-size:.85rem;font-weight:700;letter-spacing:.08em;min-width:100px;box-shadow:0 4px 12px rgba(212,175,127,.3);text-transform:uppercase}
 .rb-fp-share-btn:hover{background:#f3c071;transform:translateY(-2px);box-shadow:0 6px 16px rgba(212,175,127,.4)}

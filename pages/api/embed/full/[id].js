@@ -97,15 +97,14 @@ export default async function handler(req, res) {
 body{font-family:Georgia,serif;background:transparent}
 .rb-fp{max-width:780px;margin:0 auto}
 .rb-fp-header{background:#111827;border-radius:16px 16px 0 0;padding:40px 32px;text-align:center;border-bottom:3px solid #d97706}
-.rb-fp-deco{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:16px}
-.rb-fp-deco-line{height:1px;width:48px;background:#d97706}
+.rb-fp-deco{display:none}
 .rb-fp-name{color:#fff;font-size:2.2rem;margin:0 0 8px;letter-spacing:.04em}
 .rb-fp-dates{color:#f59e0b;font-size:1rem;letter-spacing:.1em}
 .rb-fp-loc{color:#9ca3af;font-size:.875rem;margin-top:8px;font-style:italic}
 .rb-fp-body{background:#f9fafb;padding:32px;border-radius:0 0 16px 16px}
 .rb-fp-carousel{position:relative;margin-bottom:28px;border-radius:12px;overflow:hidden}
 .rb-fp-carousel-track{display:flex;transition:transform .4s ease}
-.rb-fp-carousel-slide{min-width:100%;aspect-ratio:16/9;background:#111827}
+.rb-fp-carousel-slide{min-width:100%;aspect-ratio:4/3;max-height:400px;background:#111827}
 .rb-fp-carousel-slide img{width:100%;height:100%;object-fit:cover}
 .rb-fp-carousel-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.5);color:#fff;border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1rem}
 .rb-fp-carousel-btn.prev{left:8px}.rb-fp-carousel-btn.next{right:8px}
@@ -114,11 +113,11 @@ body{font-family:Georgia,serif;background:transparent}
 .rb-fp-dot.active{background:#d97706}
 .rb-fp-section-header{display:flex;align-items:center;gap:12px;margin:24px 0 12px}
 .rb-fp-section-line{height:1px;flex:1;background:#e5e7eb}
-.rb-fp-section-title{color:#b45309;font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;white-space:nowrap}
+.rb-fp-section-title{color:#b45309;font-size:1.1rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;white-space:nowrap}
 .rb-fp-text{color:#374151;font-size:1rem;line-height:1.75}
 .rb-fp-services{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:8px}
 .rb-fp-service-card{background:#fef3c7;border:1px solid #fcd34d;border-radius:10px;padding:14px}
-.rb-fp-service-type{color:#92400e;font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}
+.rb-fp-service-type{color:#92400e;font-size:1rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}
 .rb-fp-service-datetime{color:#1f2937;font-size:.9rem;font-weight:600}
 .rb-fp-service-loc{color:#4b5563;font-size:.82rem;margin-top:2px}
 .rb-fp-mw{margin-top:32px;background:#1e1e2e;border-radius:12px;padding:24px}

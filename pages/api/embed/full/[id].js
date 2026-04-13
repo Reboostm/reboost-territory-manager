@@ -83,7 +83,7 @@ export default async function handler(req, res) {
             ? m.createdAt.toDate().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
             : '';
           const photosHtml = m.photos && m.photos.length > 0
-            ? `<div class="rb-fp-memory-images">${m.photos.map((p) => `<div class="rb-fp-memory-image"><img src="${esc(p)}" alt="Memory photo"></div>`).join('')}</div>`
+            ? `<div class="rb-fp-memory-images">${m.photos.map((p) => `<div class="rb-fp-memory-image"><img src="${esc(p)}" alt="Memory photo" onclick="rbOpenLightbox('${p.replace(/'/g, "\\'")}')"></div>`).join('')}</div>`
             : '';
           return `<div class="rb-fp-memory-card"><div class="rb-fp-memory-header"><span class="rb-fp-memory-name">${esc(m.name)}</span><span class="rb-fp-memory-rel">${esc(m.relationship)}</span></div><div class="rb-fp-memory-text">${esc(m.memoryText)}</div>${photosHtml}${mDate ? '<div class="rb-fp-memory-date">' + esc(mDate) + '</div>' : ''}</div>`;
         }).join('');
@@ -132,8 +132,14 @@ body{font-family:Georgia,serif;background:transparent}
 .rb-fp-memory-text{color:#d1d5db;font-size:.875rem;line-height:1.65}
 .rb-fp-memory-date{color:#6b7280;font-size:.75rem;margin-top:8px}
 .rb-fp-memory-images{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin:16px 0}
-.rb-fp-memory-image{width:100%;aspect-ratio:1;border-radius:6px;border:1px solid #374151;overflow:hidden;cursor:pointer}
-.rb-fp-memory-image img{width:100%;height:100%;object-fit:cover}
+.rb-fp-memory-image{width:100%;aspect-ratio:1;border-radius:6px;border:1px solid #374151;overflow:hidden;cursor:pointer;transition:transform .2s}
+.rb-fp-memory-image:hover{transform:scale(1.05)}
+.rb-fp-memory-image img{width:100%;height:100%;object-fit:cover;cursor:pointer}
+.rb-fp-lightbox{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.9);z-index:9999;align-items:center;justify-content:center}
+.rb-fp-lightbox.active{display:flex}
+.rb-fp-lightbox-content{position:relative;max-width:90vw;max-height:90vh}
+.rb-fp-lightbox-img{max-width:100%;max-height:100%;object-fit:contain}
+.rb-fp-lightbox-close{position:absolute;top:20px;right:20px;background:rgba(255,255,255,.3);color:#fff;border:none;width:40px;height:40px;border-radius:50%;font-size:24px;cursor:pointer}
 .rb-fp-form{background:#13131f;border:1px solid #374151;border-radius:10px;padding:20px;margin-top:16px}
 .rb-fp-form-title{color:#fff;font-size:.9rem;margin-bottom:14px}
 .rb-fp-field{margin-bottom:12px}
@@ -176,6 +182,12 @@ body{font-family:Georgia,serif;background:transparent}
       <div id="rb-mphoto-preview" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:16px;margin-bottom:12px"></div>
       <button class="rb-fp-submit" id="rb-msubmit">Share Memory</button>
       <div id="rb-mmsg"></div>
+    </div>
+  </div>
+  <div class="rb-fp-lightbox" id="rb-lightbox">
+    <div class="rb-fp-lightbox-content">
+      <img class="rb-fp-lightbox-img" id="rb-lightbox-img" src="">
+      <button class="rb-fp-lightbox-close" onclick="document.getElementById('rb-lightbox').classList.remove('active')">×</button>
     </div>
   </div>
 </div>
@@ -251,8 +263,9 @@ body{font-family:Georgia,serif;background:transparent}
           setTimeout(function() { msgEl.innerHTML = ''; }, 3000);
           refreshMemories();
         })
-        .catch(function() {
-          msgEl.innerHTML = '<div class="rb-fp-error">Unable to submit. Please try again.</div>';
+        .catch(function(err) {
+          console.error('Memory submit error:', err);
+          msgEl.innerHTML = '<div class="rb-fp-error">Unable to submit. Please check your name and memory, then try again.</div>';
         })
         .finally(function() {
           btn.disabled = false;
@@ -333,6 +346,21 @@ body{font-family:Georgia,serif;background:transparent}
   }
 
   /* All photos displayed in grid - no rotation */
+
+  /* ---- Image Lightbox ---- */
+  window.rbOpenLightbox = function(imageSrc) {
+    var lightbox = document.getElementById('rb-lightbox');
+    var img = document.getElementById('rb-lightbox-img');
+    img.src = imageSrc;
+    lightbox.classList.add('active');
+  };
+
+  var lightbox = document.getElementById('rb-lightbox');
+  if (lightbox) {
+    lightbox.addEventListener('click', function(e) {
+      if (e.target === this) this.classList.remove('active');
+    });
+  }
 })();
 </script>
 </body>

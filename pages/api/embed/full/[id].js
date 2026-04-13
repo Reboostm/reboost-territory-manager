@@ -378,7 +378,7 @@ body{font-family:Georgia,serif;background:transparent}
         }
         el.innerHTML = memories.map(function(m) {
           var d = m.createdAt ? new Date(m.createdAt.seconds ? m.createdAt.seconds * 1000 : m.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
-          return '<div class="rb-fp-memory-card"><div class="rb-fp-memory-header"><span class="rb-fp-memory-name">' + escJs(m.name) + '</span><span class="rb-fp-memory-rel">' + escJs(m.relationship) + '</span></div><div class="rb-fp-memory-text">' + escJs(m.memoryText) + '</div>' + (m.photos && m.photos.length > 0 ? '<div class="rb-fp-memory-images">' + m.photos.map(function(p) { return '<div class="rb-fp-memory-image" data-img="' + p.replace(/"/g, '&quot;') + '"><img src="' + p + '" alt="Memory photo"></div>'; }).join('') + '</div>' : '') + (d ? '<div class="rb-fp-memory-date">' + d + '</div>' : '') + '</div>';
+          return '<div class="rb-fp-memory-card"><div class="rb-fp-memory-header"><span class="rb-fp-memory-name">' + escJs(m.name) + '</span><span class="rb-fp-memory-rel">' + escJs(m.relationship) + '</span></div><div class="rb-fp-memory-text">' + escJs(m.memoryText) + '</div>' + (m.photos && m.photos.length > 0 ? '<div class="rb-fp-memory-images">' + m.photos.map(function(p) { var esc_p = p.replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); return '<div class="rb-fp-memory-image" data-img="' + esc_p + '"><img src="' + esc_p + '" alt="Memory photo"></div>'; }).join('') + '</div>' : '') + (d ? '<div class="rb-fp-memory-date">' + d + '</div>' : '') + '</div>';
         }).join('');
         // Attach click handlers to newly loaded memory images
         attachMemoryImageListeners();

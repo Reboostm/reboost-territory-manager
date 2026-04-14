@@ -118,14 +118,19 @@ exports.checkMemoryForSpam = functions.firestore
       `;
 
       // Send email to all directors
-      await resend.emails.send({
-        from: 'noreply@resend.dev',
-        to: emailList,
-        subject: `⚠️ Suspicious Memory on ${obituaryName}`,
-        html: emailHtml,
-      });
+      try {
+        const emailResult = await resend.emails.send({
+          from: 'noreply@resend.dev',
+          to: emailList,
+          subject: `⚠️ Suspicious Memory on ${obituaryName}`,
+          html: emailHtml,
+        });
 
-      console.log(`Spam alert sent to ${emailList.join(', ')} for memory ${memoryId}`);
+        console.log(`✅ Spam alert sent to ${emailList.join(', ')} for memory ${memoryId}. Resend ID: ${emailResult.id}`);
+      } catch (emailError) {
+        console.error(`❌ Failed to send email: ${emailError.message}`);
+        throw emailError;
+      }
 
     } catch (error) {
       console.error('Error processing memory:', error);

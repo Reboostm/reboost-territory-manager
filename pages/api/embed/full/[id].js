@@ -143,11 +143,11 @@ body{font-family:Georgia,serif;background:transparent}
 .rb-fp-memory-image{width:100%;aspect-ratio:1;border-radius:6px;border:1px solid #374151;overflow:hidden;cursor:pointer;transition:transform .2s}
 .rb-fp-memory-image:hover{transform:scale(1.05)}
 .rb-fp-memory-image img{width:100%;height:100%;object-fit:cover;cursor:pointer}
-.rb-fp-lightbox{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,.98);z-index:9999;align-items:center;justify-content:center;padding:20px;overflow:auto}
-.rb-fp-lightbox.active{display:flex !important;visibility:visible;opacity:1}
-.rb-fp-lightbox-content{position:relative;display:flex;align-items:center;justify-content:center;min-height:100vh;z-index:10001}
-.rb-fp-lightbox-img{max-width:90%;max-height:85vh;width:auto;height:auto;object-fit:contain;display:block;z-index:10001}
-.rb-fp-lightbox-close{position:fixed;top:20px;right:20px;background:rgba(212,175,127,.3);color:#d4af7f;border:none;width:48px;height:48px;border-radius:50%;font-size:28px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;z-index:10002}
+.rb-fp-lightbox{display:none;position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.95);z-index:9999;align-items:center;justify-content:center;padding:40px 20px}
+.rb-fp-lightbox.active{display:flex !important}
+.rb-fp-lightbox-content{position:relative;display:flex;align-items:center;justify-content:center;width:100%;height:100%;z-index:10001}
+.rb-fp-lightbox-img{max-width:95%;max-height:90%;width:auto;height:auto;object-fit:contain;display:block;z-index:10001;background:#000;padding:10px}
+.rb-fp-lightbox-close{position:absolute;top:20px;right:20px;background:rgba(212,175,127,.4);color:#d4af7f;border:none;width:48px;height:48px;border-radius:50%;font-size:28px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;z-index:10002}
 .rb-fp-lightbox-close:hover{background:rgba(212,175,127,.5);color:#f3c071}
 .rb-fp-form{background:#13131f;border:1px solid #374151;border-radius:10px;padding:20px;margin-top:16px}
 .rb-fp-form-title{color:#fff;font-size:.9rem;margin-bottom:14px}

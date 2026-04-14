@@ -10,6 +10,8 @@ const DEFAULT_BAD_WORDS = [
   'spam', 'scam', 'hack', 'viagra', 'casino', 'lottery',
   'congratulations you won', 'click here', 'limited time', 'act now',
   'free money', 'make money fast', 'work from home', 'get rich',
+  'fuck', 'shit', 'asshole', 'bitch', 'damn', 'hell', 'crap',
+  'piss', 'bastard', 'dick', 'cock', 'pussy', 'ass', 'whore',
 ];
 
 // Check if memory content is suspicious

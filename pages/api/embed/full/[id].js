@@ -35,6 +35,38 @@ export default async function handler(req, res) {
       return res.status(200).send(errorPage('Obituary is not published'));
     }
 
+    // Extract primary service for postMessage (prioritize Funeral Service)
+    let primaryService = null;
+    if (o.services && o.services.length > 0) {
+      primaryService = o.services.find(s => s.type === 'Funeral Service') || o.services[0];
+    }
+
+    // Build service data for postMessage
+    const serviceDate = primaryService?.date || '';
+    const serviceTime = primaryService?.time || '';
+    const serviceLocation = primaryService?.location || '';
+    const serviceDateTime = serviceDate && serviceTime ? `${serviceDate} at ${serviceTime}` : (serviceDate || serviceTime || '');
+
+    // Build rawServiceText as readable string (e.g., "Funeral Service – Saturday, April 12 at 2:00 PM – 123 Main St")
+    let rawServiceText = '';
+    if (primaryService) {
+      const parts = [primaryService.type];
+      if (serviceDate) parts.push(serviceDate);
+      if (serviceTime) parts.push(`at ${serviceTime}`);
+      if (serviceLocation) parts.push(serviceLocation);
+      rawServiceText = parts.join(' – ');
+    }
+
+    // Data to send to parent page via postMessage
+    const obituaryDataForPostMessage = {
+      deceasedName: o.fullName || '',
+      serviceDate: serviceDate,
+      serviceTime: serviceTime,
+      serviceDateTime: serviceDateTime,
+      serviceLocation: serviceLocation,
+      rawServiceText: rawServiceText
+    };
+
     // Fetch memories
     let memories = [];
     try {
@@ -179,6 +211,10 @@ body{font-family:Georgia,serif;background:transparent}
 </style>
 </head>
 <body>
+<script>
+// Embed obituary data for postMessage to parent page
+window.__obituaryData = ${JSON.stringify(obituaryDataForPostMessage)};
+</script>
 <div class="rb-fp">
   <div class="rb-fp-header">
     <div class="rb-fp-deco"><div class="rb-fp-deco-line"></div><span style="color:#f59e0b;font-size:1.2rem">&#10013;</span><div class="rb-fp-deco-line"></div></div>
@@ -520,6 +556,16 @@ body{font-family:Georgia,serif;background:transparent}
   if (window.ResizeObserver) {
     var ro = new ResizeObserver(notifyHeight);
     ro.observe(document.body);
+  }
+
+  /* ---- Send Obituary Data to Parent Page ---- */
+  if (window.__obituaryData) {
+    try {
+      parent.postMessage({
+        type: 'rbObituaryData',
+        payload: window.__obituaryData
+      }, '*');
+    } catch(e) {}
   }
 })();
 </script>

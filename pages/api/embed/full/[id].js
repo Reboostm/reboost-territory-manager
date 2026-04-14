@@ -143,12 +143,6 @@ body{font-family:Georgia,serif;background:transparent}
 .rb-fp-memory-image{width:100%;aspect-ratio:1;border-radius:6px;border:1px solid #374151;overflow:hidden;cursor:pointer;transition:transform .2s}
 .rb-fp-memory-image:hover{transform:scale(1.05)}
 .rb-fp-memory-image img{width:100%;height:100%;object-fit:cover;cursor:pointer}
-.rb-fp-lightbox{display:none;position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.95);z-index:9999;align-items:center;justify-content:center;padding:40px 20px}
-.rb-fp-lightbox.active{display:flex !important}
-.rb-fp-lightbox-content{position:relative;display:flex;align-items:center;justify-content:center;width:100%;height:100%;z-index:10001}
-.rb-fp-lightbox-img{max-width:95%;max-height:90%;width:auto;height:auto;object-fit:contain;display:block;z-index:10001;background:#000;padding:10px;margin:0 auto;border:2px solid #d4af7f}
-.rb-fp-lightbox-close{position:absolute;top:20px;right:20px;background:rgba(212,175,127,.4);color:#d4af7f;border:none;width:48px;height:48px;border-radius:50%;font-size:28px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;z-index:10002}
-.rb-fp-lightbox-close:hover{background:rgba(212,175,127,.5);color:#f3c071}
 .rb-fp-form{background:#13131f;border:1px solid #374151;border-radius:10px;padding:20px;margin-top:16px}
 .rb-fp-form-title{color:#fff;font-size:.9rem;margin-bottom:14px}
 .rb-fp-field{margin-bottom:12px}
@@ -213,12 +207,6 @@ body{font-family:Georgia,serif;background:transparent}
       <div id="rb-mphoto-preview" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:16px;margin-bottom:12px"></div>
       <button class="rb-fp-submit" id="rb-msubmit">Share Memory</button>
       <div id="rb-mmsg"></div>
-    </div>
-  </div>
-  <div class="rb-fp-lightbox" id="rb-lightbox">
-    <div class="rb-fp-lightbox-content">
-      <img class="rb-fp-lightbox-img" id="rb-lightbox-img" src="">
-      <button class="rb-fp-lightbox-close" onclick="document.getElementById('rb-lightbox').classList.remove('active')">×</button>
     </div>
   </div>
 </div>
@@ -411,8 +399,6 @@ body{font-family:Georgia,serif;background:transparent}
           var d = m.createdAt ? new Date(m.createdAt.seconds ? m.createdAt.seconds * 1000 : m.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
           return '<div class="rb-fp-memory-card"><div class="rb-fp-memory-header"><span class="rb-fp-memory-name">' + escJs(m.name) + '</span><div style="display:flex;align-items:center;gap:8px"><span class="rb-fp-memory-rel">' + escJs(m.relationship) + '</span><button class="rb-fp-memory-share" data-sharer="' + escJs(m.name) + '" title="Share this memory">Share</button></div></div><div class="rb-fp-memory-text">' + escJs(m.memoryText) + '</div>' + (m.photos && m.photos.length > 0 ? '<div class="rb-fp-memory-images">' + m.photos.map(function(p) { var esc_p = p.replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); return '<div class="rb-fp-memory-image" data-img="' + esc_p + '"><img src="' + esc_p + '" alt="Memory photo"></div>'; }).join('') + '</div>' : '') + (d ? '<div class="rb-fp-memory-date">' + d + '</div>' : '') + '</div>';
         }).join('');
-        // Attach click handlers to newly loaded memory images
-        attachMemoryImageListeners();
         // Re-attach share button listeners will be done after rbShare function is defined
         setTimeout(notifyHeight, 100);
         document.querySelectorAll('#rb-memories img').forEach(function(img) { img.addEventListener('load', notifyHeight); });
@@ -425,36 +411,6 @@ body{font-family:Georgia,serif;background:transparent}
 
   /* All photos displayed in grid - no rotation */
 
-  /* ---- Image Lightbox ---- */
-  window.rbOpenLightbox = function(imageSrc) {
-    var lightbox = document.getElementById('rb-lightbox');
-    var img = document.getElementById('rb-lightbox-img');
-    console.log('Opening lightbox with image:', imageSrc);
-    img.src = imageSrc;
-    img.onerror = function() {
-      console.error('Failed to load image:', imageSrc);
-      img.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200"%3E%3Crect fill="%23333" width="200" height="200"/%3E%3Ctext fill="%23999" x="50%" y="50%" font-size="16" text-anchor="middle" dy=".3em"%3EImage not found%3C/text%3E%3C/svg%3E';
-    };
-    lightbox.classList.add('active');
-  };
-
-  var lightbox = document.getElementById('rb-lightbox');
-  if (lightbox) {
-    lightbox.addEventListener('click', function(e) {
-      if (e.target === this) this.classList.remove('active');
-    });
-  }
-
-  /* ---- Memory Image Lightbox Handlers ---- */
-  function attachMemoryImageListeners() {
-    document.querySelectorAll('.rb-fp-memory-image').forEach(function(div) {
-      div.addEventListener('click', function() {
-        var img = this.getAttribute('data-img');
-        if (img) rbOpenLightbox(img);
-      });
-    });
-  }
-  attachMemoryImageListeners();
 
   /* ---- Social Media Sharing ---- */
   var getShareUrl = function() {

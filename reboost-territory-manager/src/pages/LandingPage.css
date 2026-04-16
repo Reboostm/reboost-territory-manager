@@ -1,0 +1,130 @@
+.landing-page {
+  min-height: 100vh;
+  background: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.landing-header {
+  background: linear-gradient(135deg, #0057ff 0%, #003fa8 100%);
+  color: white;
+  padding: 48px 20px;
+  text-align: center;
+}
+
+.landing-header h1 {
+  margin: 0 0 8px 0;
+  color: white;
+  font-size: 32px;
+}
+
+.landing-header p {
+  margin: 0;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.landing-main {
+  flex: 1;
+  max-width: 600px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 48px 20px;
+}
+
+.landing-content {
+  background: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.availability-available,
+.availability-taken {
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.availability-available h2,
+.availability-taken h2 {
+  margin: 12px 0 16px 0;
+  font-size: 24px;
+}
+
+.availability-available p,
+.availability-taken p {
+  margin-bottom: 12px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #333;
+}
+
+.waitlist-form {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #e5e5e5;
+}
+
+.waitlist-form .form-group {
+  margin-bottom: 12px;
+}
+
+.waitlist-form input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.waitlist-form input:focus {
+  outline: none;
+  border-color: #0057ff;
+  box-shadow: 0 0 0 3px rgba(0, 87, 255, 0.1);
+}
+
+.waitlist-form button {
+  width: 100%;
+  margin-top: 12px;
+}
+
+.landing-footer {
+  text-align: center;
+  padding: 32px 20px;
+  border-top: 1px solid #e5e5e5;
+  color: #999;
+  font-size: 12px;
+}
+
+.landing-footer p {
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .landing-header {
+    padding: 32px 16px;
+  }
+
+  .landing-header h1 {
+    font-size: 22px;
+  }
+
+  .landing-main {
+    padding: 24px 16px;
+  }
+
+  .landing-content {
+    padding: 24px;
+  }
+}

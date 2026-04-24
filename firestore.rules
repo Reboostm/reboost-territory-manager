@@ -1,0 +1,19 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // SEO audit records — created/read via server API routes
+    // Admin auth is handled at the API layer (password check), not here
+    match /seo_audits/{auditId} {
+      allow read:   if true;   // report page reads publicly
+      allow create: if true;   // anyone can submit the audit form
+      allow update: if true;   // API routes update status + results
+      allow delete: if false;  // never delete through client
+    }
+
+    // Block everything else by default
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

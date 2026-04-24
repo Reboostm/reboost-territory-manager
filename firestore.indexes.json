@@ -1,28 +1,18 @@
 {
   "indexes": [
     {
-      "collectionGroup": "obituaries",
+      "collectionGroup": "seo_audits",
       "queryScope": "COLLECTION",
       "fields": [
-        { "fieldPath": "status",    "order": "ASCENDING"  },
         { "fieldPath": "createdAt", "order": "DESCENDING" }
       ]
     },
     {
-      "collectionGroup": "memories",
+      "collectionGroup": "seo_audits",
       "queryScope": "COLLECTION",
       "fields": [
-        { "fieldPath": "obituaryId", "order": "ASCENDING"  },
-        { "fieldPath": "createdAt",  "order": "DESCENDING" }
-      ]
-    },
-    {
-      "collectionGroup": "memories",
-      "queryScope": "COLLECTION",
-      "fields": [
-        { "fieldPath": "obituaryId", "order": "ASCENDING"  },
-        { "fieldPath": "published",  "order": "ASCENDING"  },
-        { "fieldPath": "createdAt",  "order": "DESCENDING" }
+        { "fieldPath": "status",    "order": "ASCENDING"  },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
       ]
     }
   ],
